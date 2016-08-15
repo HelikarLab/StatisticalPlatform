@@ -1,2 +1,1 @@
-# StatisticalPlatform
-Interactive Platform for Statistical Computing
+# Helikar

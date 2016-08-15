@@ -1,0 +1,139 @@
+<!--
+copyright 2016 Helikar Lab
+
+Developed by Shubham Kumar, Vinit Ravishankar and Akram Mohammed
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later
+version. This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+details. You should have received a copy of the GNU General Public License
+along with this program. If not, see <http://www.gnu.org/licenses/>
+-->
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Components</title>
+
+    <script src="js/libs/jquery_min.js" type="text/javascript"></script>
+    <script src="js/libs/bootstrap.min.js"></script>
+    <script src="js/libs/JSXTransformer.js"></script>
+    <script src="js/libs/react.v3.js"></script>
+    <script src="js/libs/FileSaver.min.js" type="text/javascript"></script>
+    <script src="dist/handsontable.full.js"></script>
+    <script src="js/libs/papaparse.min.js" type="text/javascript"></script>
+    <script src="js/libs/squeezeFrame.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/libs/opencpu-0.4.js" type="text/javascript"></script>
+    <script src="js/libs/d3.min.js" charset="utf-8"></script>
+    <script src="js/libs/crossfilter.min.js"></script>
+    <script src="js/libs/dc.js"></script>
+    <script src="js/libs/underscore.js"></script>
+    <script src="js/libs/react-bootstrap.min.js"></script>
+    <script src="js/libs/nv.d3.js"></script>
+
+    <script src="js/components/ChoicePanel.js" type="text/jsx"></script>
+    <script src="js/components/FileField.js" type="text/jsx"></script>
+    <script src="js/components/HTable.js" type="text/jsx"></script>
+    <script src="js/components/ChoiceModal.js" type="text/jsx"></script>
+    <script src="js/components/BivariateModal.js" type="text/jsx"></script>
+    <script src="js/components/DCModal.js" type="text/jsx"></script>
+    <script src="js/components/PlotModal.js" type="text/jsx"></script>
+    <script src="js/components/BoxPlotModal.js" type="text/jsx"></script>
+    <script src="js/components/ClusterModal.js" type="text/jsx"></script>
+    <script src="js/components/DensityClusterModal.js" type="text/jsx"></script>
+    <script src="js/components/TestsModal.js" type="text/jsx"></script>
+    <script src="js/components/AnovaModal.js" type="text/jsx"></script>
+    <script src="js/components/ClassifyModal.js" type="text/jsx"></script>
+    <script src="js/components/SVMModal.js" type="text/jsx"></script>
+    <script src="js/components/HistModal.js" type="text/jsx"></script>
+
+    <script src="js/components/DCModal.js" type="text/jsx"></script>
+
+    <script src="js/components/MyBar.js" type="text/jsx"></script>
+    <script src="js/components/PlotWindow.js" type="text/jsx"></script>
+    <script src="js/components/WholeThing.js" type="text/jsx"></script>
+
+		<script src="js/lineplot.js" type="text/jsx"></script>
+		<script src="js/histogram.js" type="text/jsx"></script>
+
+		<!-- Resources related to dashboard -->
+		<script src="js/dashboard.js" type="text/jsx"></script>
+		<script src="js/components/DashboardModal.js" type="text/jsx"></script>
+
+		<!-- Resources related to Bar Chart -->
+		<script src="js/components/BarChartModal.js" type="text/jsx"></script>
+		<script src="js/barplot.js"></script>
+		<link rel="stylesheet" href="./css/barchart.css" type="text/css" title="no title" charset="utf-8"/>
+
+		<!-- Input CSV file as URL -->
+		<script src="js/components/URLModal.js" type="text/jsx"></script>
+
+		<!-- Resources related to dendogram -->
+		<script src="js/components/DendogramModal.js" type="text/jsx"></script>
+		<script src="./js/dendogram.js"></script>
+		<link rel="stylesheet" type="text/css" href="./css/dendogram.css" />
+
+		<!-- Resources related to k-means clustering -->
+		<script src="./js/libs/jquery.tipsy.js" type="text/javascript" charset="utf-8"></script>
+		<script src="./js/kmeans.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" href="./css/libs/tipsy.css" type="text/css" title="no title" charset="utf-8"/>
+		<link rel="stylesheet" href="./css/kmeans.css" type="text/css" title="no title" charset="utf-8"/>
+		<script src="js/components/KMeansModal.js" type="text/jsx"></script>
+
+		<!--Resources related to Scatter Matrix -->
+		<script src="js/scatterMatrix.js" type="text/jsx"></script>
+		<link rel="stylesheet" href="./css/scattermatrix.css" type="text/css" title="no title" charset="utf-8"/>
+		<script src="js/components/ScatterMatrixModal.js" type="text/jsx"></script>
+
+		<!-- Resources related to QQ plot  -->
+		<script src="js/components/QQPlotModal.js" type="text/jsx"></script>
+		<script src="js/qqplot.js" type="text/jsx"></script>
+
+		<!-- Ressources related to Time Series Analysis -->
+		<script src="./js/timeseries.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" href="./css/timeseries.css" type="text/css" title="no title" charset="utf-8"/>
+		<script src="js/components/TimeSeriesModal.js" type="text/jsx"></script>
+
+		<!-- Resources related to covariance and corelation matrix -->
+		<script src="js/libs/colorbrewer.v1.min.js"></script>
+		<script src="js/components/ComatrixModal.js" type="text/jsx"></script>
+		<script src="./js/colormap.js"></script>
+		<link rel="stylesheet" href="./css/colormap.css" />
+
+		<!-- Resources related to scatter plot -->
+		<script src="js/components/ScatterPlotModal.js" type="text/jsx"></script>
+		<script src="js/scatterplot.js" type="text/jsx"></script>
+
+		<!-- Ressources related to heatmap -->
+		<link rel="stylesheet" href="./css/heatmap.css" type="text/css" title="no title" charset="utf-8"/>
+		<script src="./js/components/HeatmapModal.js" type="text/jsx"></script>
+		<script src="./js/heatmap.js" type="text/jsx"></script>
+
+		<script src="js/components/NewChartModal.js" type="text/jsx"></script>
+
+		<!-- Resources related to linear and multiple regression analysis -->
+		<script src="js/components/RegressionModal.js" type="text/jsx"></script>
+		<script src="js/regression.js" type="text/jsx"></script>
+
+    <script src="js/components.js" type="text/jsx"></script>
+    <script src="js/nvd3_plots.js" type="text/jsx"></script>
+    <script src="js/clusters.js" type="text/jsx"></script>
+    <script src="js/classifiers.js" type="text/jsx"></script>
+
+    <link rel="stylesheet" href="css/libs/bootstrap.min.css">
+    <link rel="stylesheet" href="css/libs/bootstrap-theme.min.css">
+    <link rel="stylesheet" media="screen" href="dist/handsontable.full.css">
+    <link rel="stylesheet" href="css/libs/dc.min.css">
+    <link rel="stylesheet" href="css/libs/nv.d3.css">
+    <link rel="stylesheet" href="css/index.css">
+
+</head>
+
+<body>
+
+</body>
+</html>
