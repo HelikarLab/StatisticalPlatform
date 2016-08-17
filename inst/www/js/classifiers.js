@@ -22,7 +22,6 @@ function naiveBayesClassify(bundle, table) {
 		file: bundle.file
 	}, function (session) {
 		session.getObject(function (out) {
-			console.log(out);
 
 			var train = bundle.table.getData();
 			var classify_var = bundle.classify_var;
@@ -40,7 +39,7 @@ function naiveBayesClassify(bundle, table) {
 			console.log(JSON.stringify(train_x));
 			console.log(JSON.stringify(train_y));
 			*/
-			ocpu.seturl("/ocpu/library/StatisticalPlatform");
+			ocpu.seturl("//public.opencpu.org/ocpu/github/HelikarLab/StatisticalPlatform/R");
 
 			ocpu.call("classify", {
 				fn: bundle.classify_type,
@@ -53,8 +52,6 @@ function naiveBayesClassify(bundle, table) {
 					out.forEach(function (x, n) {
 						x["output"] = obj[n];
 					});
-					console.log(out);
-					console.log(Object.keys(out[0]));
 					table.setHeaders(Object.keys(out[0]));
 					table.setData(out);
 					table.displayOn();
@@ -69,14 +66,10 @@ function evaluate(bundle, bar_ref) {
 
 	var data = bundle.table.getData();
 	var ratio = Number(bundle.ratio);
-	console.log(bundle.ratio);
 
 	shuffle(data);
 	var test_index = Math.floor(data.length * ratio / 100);
-	console.log(test_index);
-
 	var classify_var = bundle.classify_var;
-
 	var train = data.slice(0, test_index);
 	var test = data.slice(test_index);
 
@@ -105,7 +98,7 @@ function evaluate(bundle, bar_ref) {
 	console.log(JSON.stringify(test_y));
 	*/
 
-	ocpu.seturl("/ocpu/library/StatisticalPlatform");
+	ocpu.seturl("//public.opencpu.org/ocpu/github/HelikarLab/StatisticalPlatform/R");
 
 	ocpu.call("myfn", {
 		fn: bundle.classify_type,
@@ -114,11 +107,9 @@ function evaluate(bundle, bar_ref) {
 		split: classify_var
 	}, function (session) {
 		session.getObject(function (obj) {
-			console.log(obj);
-			bar_ref.setText(bundle.classify_type + "_modal", "Precision: " + obj[0].precision + "; recall: " + obj[0].recall + "; F-score: " + obj[0].f_score);
+		bar_ref.setText(bundle.classify_type + "_modal", "Precision: " + obj[0].precision + "; recall: " + obj[0].recall + "; F-score: " + obj[0].f_score);
 		});
 		session.getConsole(function (outtxt) {
-			console.log(outtxt);
 		})
 	});
 }

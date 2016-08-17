@@ -158,9 +158,9 @@ var MyBar = React.createClass(
 
 					</DropdownButton>
 
-					<DropdownButton title="Data Table">
-						<MenuItem onClick={this.tableClick}>View</MenuItem>
-						<MenuItem onClick={this.exportClick}>Export</MenuItem>
+					<DropdownButton title="Data">
+						<MenuItem onClick={this.tableClick}>View/Hide</MenuItem>
+						<MenuItem onClick={this.exportClick}>Export data</MenuItem>
 					</DropdownButton>
 
 					<DropdownButton title="Plots">
@@ -193,13 +193,26 @@ var MyBar = React.createClass(
 							<MenuItem>Heatmap</MenuItem>
 						</ModalTrigger>
 
-						<ModalTrigger modal={<TimeSeriesModal onClick={this.plotD3Chart.bind(this, "plotTimeSeries")} variables={this.props.variables}  />}>
-							<MenuItem>Time Series</MenuItem>
-						</ModalTrigger>
-
 					</DropdownButton>
 
-					<DropdownButton title="Statistics">
+					<DropdownButton title="Analyze">
+
+						<ModalTrigger modal={<ChoiceModal onClick={this.uniClick} variables={this.props.variables} />}>
+							<MenuItem>Univariate</MenuItem>
+						</ModalTrigger>
+
+						<ModalTrigger modal={<BivariateModal onClick={this.biClick} variables={this.props.variables} />}>
+							<MenuItem>Bivariate</MenuItem>
+						</ModalTrigger>
+
+						<ModalTrigger modal={<TestsModal onClick={this.testClick} variables={this.props.variables} />}>
+							<MenuItem>T-Tests</MenuItem>
+						</ModalTrigger>
+
+						<ModalTrigger modal={<AnovaModal onClick={this.anovaClick} variables={this.props.variables} />}>
+							<MenuItem>ANOVA</MenuItem>
+						</ModalTrigger>
+
 						<ModalTrigger modal={<QQPlotModal onClick={this.plotQQChart.bind(this, "plotQQ")} variables={this.props.variables}  />}>
 							<MenuItem>QQ plot</MenuItem>
 						</ModalTrigger>
@@ -212,24 +225,8 @@ var MyBar = React.createClass(
 							<MenuItem>Linear Regression</MenuItem>
 						</ModalTrigger>
 
-					</DropdownButton>
-
-					<DropdownButton title="Analysis">
-
-						<ModalTrigger modal={<ChoiceModal onClick={this.uniClick} variables={this.props.variables} />}>
-							<MenuItem>Univariate</MenuItem>
-						</ModalTrigger>
-
-						<ModalTrigger modal={<BivariateModal onClick={this.biClick} variables={this.props.variables} />}>
-							<MenuItem>Bivariate</MenuItem>
-						</ModalTrigger>
-
-						<ModalTrigger modal={<TestsModal onClick={this.testClick} variables={this.props.variables} />}>
-							<MenuItem>t-tests</MenuItem>
-						</ModalTrigger>
-
-						<ModalTrigger modal={<AnovaModal onClick={this.anovaClick} variables={this.props.variables} />}>
-							<MenuItem>ANOVA</MenuItem>
+						<ModalTrigger modal={<TimeSeriesModal onClick={this.plotD3Chart.bind(this, "plotTimeSeries")} variables={this.props.variables}  />}>
+							<MenuItem>Time Series</MenuItem>
 						</ModalTrigger>
 
 					</DropdownButton>
@@ -244,14 +241,9 @@ var MyBar = React.createClass(
 							<MenuItem>K-means clustering</MenuItem>
 						</ModalTrigger>
 
-						<ModalTrigger modal={<DensityClusterModal onClick={this.densityClusterClick.bind(this, "density")} variables={this.props.variables} />}>
-							<MenuItem>Density-based (DBSCAN)</MenuItem>
-						</ModalTrigger>
-
 					</DropdownButton>
 
 					<DropdownButton title="Classification">
-
 						<ModalTrigger modal={<ClassifyModal ref="naiveBayes_modal" onClick={this.classifyClick} variables={this.props.variables} />}>
 							<MenuItem>Naive Bayes</MenuItem>
 						</ModalTrigger>

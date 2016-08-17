@@ -208,8 +208,8 @@ function makePlot(obj, props) {
 	}
 
 	if (type == "plotBarChart") {
-		if (props.simple_bool) {
 
+		if (props.simple_bool) {
 			ocpu.seturl("//public.opencpu.org/ocpu/github/HelikarLab/StatisticalPlatform/R");
 
 			var data = dataJSON, value = props.var_x, plotData = {};
@@ -221,7 +221,6 @@ function makePlot(obj, props) {
 					addNewPlot('Simple Bar Plot', plotData);
 					plotSimpleBar(plotData);
 				});
-
 				//if R returns an error, alert the error message
 				req.fail(function(){
 					alert("Server error: " + req.responseText);

@@ -111,7 +111,7 @@ function densityCluster(bundle) {
 	ocpu.seturl("//public.opencpu.org/ocpu/library/base/R");
 	var frame = new ocpu.Snippet("head(data.frame(jsonlite::fromJSON('" + JSON.stringify(hot.getData()) + "')), -1)");
 
-	ocpu.seturl("//public.opencpu.org/ocpu/library/fpc/R");
+	ocpu.seturl("//public.opencpu.org/ocpu/library/dbscan/R");
 	var req = ocpu.call("dbscan", {
 		data: frame,
 		MinPts: minpts,
@@ -127,7 +127,6 @@ function densityCluster(bundle) {
 					makePlot(null, {type: "scatterChart", data: obj2, var_x: var_x, var_y: var_y, var_g: "cluster"});
 				});
 			});
-			console.log(obj);
 		});
 	});
 }
