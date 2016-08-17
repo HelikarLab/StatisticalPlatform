@@ -19,11 +19,23 @@ var ScatterPlotModal = React.createClass({
     return {is_exponential: false};
     return {is_polynomial: false};
     return {is_logarithmic: false};
+    return { showResults: false };
   },
+  onClick: function() {
+       this.setState({ showResults: true });
+   },
 
 	render: function() {
 
 		var options_list = [];
+    var inst, bold_style = {'fontSize': '15', 'fontWeight': 'bold'};
+
+    if (!this.state.showResults) {
+      inst = <Button onClick={this.onClick}>Description</Button>
+    }
+    else {
+      inst = <p style = {bold_style}>Description:</p>;
+    }
 
 		this.props.variables.forEach(function (variable) {
 			options_list.push(<option value={variable}>{variable}</option>);
@@ -45,6 +57,9 @@ var ScatterPlotModal = React.createClass({
           <Input type='checkbox' label='Exponential Trendline' ref='exponential' onChange={this.handleChange2} />
           <Input type='checkbox' label='Polynomial Trendline' ref='polynomial' onChange={this.handleChange3} />
           <Input type='checkbox' label='Logarithmic Trendline' ref='logarithmic' onChange={this.handleChange4} />
+
+          {inst}
+           { this.state.showResults ? <ScatterPlotInstruction /> : null }
 
 				</div>
         <div className='modal-footer'>
@@ -71,4 +86,65 @@ var ScatterPlotModal = React.createClass({
   handleChange4: function() {
     this.setState({is_logarithmic: !this.state.is_logarithmic});
   }
+});
+
+var ScatterPlotInstruction = React.createClass({
+    render: function() {
+			var style = {'fontFamily': 'DROID SANS MONO'};
+
+        return (
+            <div id="results" className="search-results">
+						<table style = {style}>
+							<tr>
+								<td>{'x <- data$var_x; y <- data$var_y;'}</td>
+							</tr>
+              <tr>
+								<td>{'plot(x, y)'}</td>
+							</tr>
+							<tr>
+								<td>{'fit <- glm(y~x)") # basic straight line of fit'}</td>
+							</tr>
+							<tr>
+								<td>{'co <- coef(fit)'}</td>
+							</tr>
+              <tr>
+								<td>{'abline(fit, col="blue", lwd=2)'}</td>
+							</tr>
+              <tr>
+                <td>{'f <- function(x,a,b) {a * exp(b * x)} # exponential'}</td>
+              </tr>
+              <tr>
+                <td>{'fit <- nls(y ~ f(x,a,b), start = c(a=1, b=1))'}</td>
+              </tr>
+              <tr>
+                <td>{'curve(f(x, a=co[1], b=co[2]), add = TRUE, col="green", lwd=2)'}</td>
+              </tr>
+              <tr>
+                <td>{'f <- function(x,a,b) {a * log(x) + b} # logarithmic'}</td>
+              </tr>
+              <tr>
+                <td>{'fit <- nls(y ~ f(x,a,b), start = c(a=1, b=1))'}</td>
+              </tr>
+              <tr>
+                <td>{'co <- coef(fit)'}</td>
+              </tr>
+              <tr>
+                <td>{'curve(f(x, a=co[1], b=co[2]), add = TRUE, col="orange", lwd=2)'}</td>
+              </tr>
+              <tr>
+                <td>{'f <- function(x,a,b,d) {(a*x^2) + (b*x) + d} # polynomial'}</td>
+              </tr>
+              <tr>
+                <td>{'fit <- nls(y ~ f(x,a,b,d), start = c(a=1, b=1, d=1))'}</td>
+              </tr>
+              <tr>
+                <td>{'co <- coef(fit)'}</td>
+              </tr>
+              <tr>
+                <td>{'curve(f(x, a=co[1], b=co[2], d=co[3]), add = TRUE, col="pink", lwd=2)'}</td>
+              </tr>
+						</table>
+            </div>
+        );
+    }
 });

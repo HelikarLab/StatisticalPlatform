@@ -14,13 +14,29 @@ along with this program. If not, see <http://www.gnu.org/licenses/>
 */
 var ScatterMatrixModal = React.createClass({
 
+		getInitialState: function() {
+				 return { showResults: false };
+		 },
+		 onClick: function() {
+	        this.setState({ showResults: true });
+	    },
+
 	render: function() {
+		var inst, bold_style = {'fontSize': '15', 'fontWeight': 'bold'};
+
+		if (!this.state.showResults) {
+			inst = <Button onClick={this.onClick}>Description</Button>
+		}
+		else {
+			inst = <p style = {bold_style}>Description:</p>;
+		}
 
 		return (
 			<Modal {...this.props} title="Scatter Matrix Plot">
 
 				<div className='modal-body'>
-					Input format: In the csv file of data add an extra column with column name as "Groups" which contains group of each data point.
+				{inst}
+				 { this.state.showResults ? <ScatterMatrixInstruction /> : null }
 				</div>
 
 				<div className='modal-footer'>
@@ -35,4 +51,25 @@ var ScatterMatrixModal = React.createClass({
 		this.props.onRequestHide();
 		this.props.onClick(this);
 		}
+});
+var ScatterMatrixInstruction = React.createClass({
+    render: function() {
+			var style = {'fontFamily': 'DROID SANS MONO'};
+
+        return (
+            <div id="results" className="search-results">
+						<p>{'Input format: In the csv file of data add an extra column with column name as "Groups" which contains group of each data point.'}</p>
+						<p>{'Input: '} <a href="./data/ScatterMatrix.csv" target="_blank">{"Sample Data"}</a></p>
+						<table style = {style}>
+
+							<tr>
+								<td>{'library(graphics)'}</td>
+							</tr>
+							<tr>
+								<td>{'pairs(data)'}</td>
+							</tr>
+						</table>
+            </div>
+        );
+    }
 });

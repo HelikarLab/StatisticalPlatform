@@ -14,9 +14,23 @@ along with this program. If not, see <http://www.gnu.org/licenses/>
 */
 var QQPlotModal = React.createClass({
 
+		getInitialState: function() {
+				 return { showResults: false };
+		 },
+		 onClick: function() {
+	        this.setState({ showResults: true });
+	    },
 	render: function() {
 
 		var options_list = [];
+		var inst, bold_style = {'fontSize': '15', 'fontWeight': 'bold'};
+
+		if (!this.state.showResults) {
+			inst = <Button onClick={this.onClick}>Description</Button>
+		}
+		else {
+			inst = <p style = {bold_style}>Description:</p>;
+		}
 
 		this.props.variables.forEach(function (variable) {
 			options_list.push(<option value={variable}>{variable}</option>);
@@ -34,6 +48,9 @@ var QQPlotModal = React.createClass({
 						{options_list}
 					</Input>
 
+					{inst}
+					 { this.state.showResults ? <QQPlotInstruction /> : null }
+
 				</div>
 
 				<div className='modal-footer'>
@@ -48,4 +65,26 @@ var QQPlotModal = React.createClass({
 		this.props.onRequestHide();
 		this.props.onClick(this, this.refs.first.getValue(), this.refs.second.getValue());
 		}
+});
+
+var QQPlotInstruction = React.createClass({
+    render: function() {
+			var style = {'fontFamily': 'DROID SANS MONO'};
+
+        return (
+            <div id="results" className="search-results">
+						<table style = {style}>
+							<tr>
+								<td>{'cor <- qqplot(data$var_x, data$var_y)'}</td>
+							</tr>
+							<tr>
+								<td>{'ss <- smooth.spline(cor$y~cor$x, spar = 1)'}</td>
+							</tr>
+							<tr>
+								<td>{'lines(ss$x, ss$y)'}</td>
+							</tr>
+						</table>
+            </div>
+        );
+    }
 });

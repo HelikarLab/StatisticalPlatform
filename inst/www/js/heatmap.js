@@ -159,11 +159,6 @@ function plotHeatmap(data) {
           })
           .on('mouseout', function(d, i) {
               d3.select('#colLabel_' + i).classed("hover", false);
-          })
-          .on("click", function(d, i) {
-              colSortOrder = !colSortOrder;
-              sortByValues("c", i, colSortOrder);
-              d3.select("#order").property("selectedIndex", 0);
           });
 
       var row = svg.selectAll(".row")

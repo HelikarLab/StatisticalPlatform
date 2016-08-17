@@ -14,9 +14,24 @@ along with this program. If not, see <http://www.gnu.org/licenses/>
 */
 var KMeansModal = React.createClass({
 
+	getInitialState: function() {
+			 return { showResults: false };
+	 },
+	 onClick: function() {
+        this.setState({ showResults: true });
+    },
+
 	render: function() {
 
 		var options_list = [];
+		var inst, bold_style = {'fontSize': '15', 'fontWeight': 'bold'};
+
+		if (!this.state.showResults) {
+			inst = <Button onClick={this.onClick}>Description</Button>
+		}
+		else {
+			inst = <p style = {bold_style}>Description:</p>;
+		}
 
 		this.props.variables.forEach(function (variable) {
 			options_list.push(<option value={variable}>{variable}</option>);
@@ -36,6 +51,9 @@ var KMeansModal = React.createClass({
 					</Input>
 
 					<Input type="number" label="Number of clusters (k)" ref="kvalue" pattern="[0-9]*" min = "1" step = "1"/>
+
+					{inst}
+					{ this.state.showResults ? <KMeansInstruction /> : null }
 				</div>
 
 				<div className='modal-footer'>
@@ -56,4 +74,24 @@ var KMeansModal = React.createClass({
 			alert("Value of 'K' is a positive integer");
 		}
 		}
+});
+
+var KMeansInstruction = React.createClass({
+    render: function() {
+			var style = {'fontFamily': 'DROID SANS MONO'};
+
+        return (
+            <div id="results" className="search-results">
+						<p>{'Select two columns and k value i.e. number of clusters.'}</p>
+						<table style = {style}>
+							<tr>
+								<td>{'library(ggplot2)'}</td>
+							</tr>
+							<tr>
+								<td>{'ggplot(data, aes(var_x, var_y, color = Species)) + geom_point()'}</td>
+							</tr>
+						</table>
+            </div>
+        );
+    }
 });

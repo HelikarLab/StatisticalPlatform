@@ -13,14 +13,30 @@ details. You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>
 */
 var HeatmapModal = React.createClass({
+	getInitialState: function() {
+			 return { showResults: false };
+	 },
+	 onClick: function() {
+        this.setState({ showResults: true });
+    },
 
 	render: function() {
+		var inst, bold_style = {'fontSize': '15', 'fontWeight': 'bold'};
+
+		if (!this.state.showResults) {
+			inst = <Button onClick={this.onClick}>Description</Button>
+		}
+		else {
+			inst = <p style = {bold_style}>Description:</p>;
+		}
 
 		return (
 			<Modal {...this.props} title="Heatmap">
 
 				<div className='modal-body'>
-          Input format: The csv file of data should contain a column of rows.
+
+				{inst}
+				 { this.state.showResults ? <HeatmapInstruction /> : null }
 				</div>
 
 				<div className='modal-footer'>
@@ -35,4 +51,25 @@ var HeatmapModal = React.createClass({
 		this.props.onRequestHide();
 		this.props.onClick(this);
 		}
+});
+
+var HeatmapInstruction = React.createClass({
+    render: function() {
+			var style = {'fontFamily': 'DROID SANS MONO'};
+
+        return (
+            <div id="results" className="search-results">
+						<p>{'Input format: The csv file of data should contain a column of rows.'}</p>
+						<p>{'Input: '} <a href="./data/heatmap.csv" target="_blank">{"Sample Data"}</a></p>
+						<table style = {style}>
+							<tr>
+								<td>{'library(stats)'}</td>
+							</tr>
+							<tr>
+								<td>{'heatmap(data)'}</td>
+							</tr>
+						</table>
+            </div>
+        );
+    }
 });
