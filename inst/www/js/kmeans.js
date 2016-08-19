@@ -13,7 +13,7 @@ function plotKMeans(plotData){
 
   d3.selectAll("svg > *").remove();
 
-  var data = plotData.kmeansData, kvalue = plotData.kvalue;
+  var data = plotData.kmeansData, kvalue = plotData.kvalue, var_x = plotData.var_x, var_y = plotData.var_y;
   data = JSON.parse(data);
 
   // set the stage
@@ -32,14 +32,14 @@ function plotKMeans(plotData){
   // set axes, as well as details on their ticks
   var xAxis = d3.svg.axis()
     .scale(x)
-    .ticks(20)
+    .ticks(40)
     .tickSubdivide(true)
     .tickSize(6, 3, 0)
     .orient("bottom");
 
   var yAxis = d3.svg.axis()
     .scale(y)
-    .ticks(20)
+    .ticks(10)
     .tickSubdivide(true)
     .tickSize(6, 3, 0)
     .orient("left");
@@ -231,7 +231,8 @@ function plotKMeans(plotData){
     .attr("text-anchor", "end")
     .attr("x", w/2)
     .attr("y", h)
-    .text("x-coordinate");
+    .style("font-size","15px")
+    .text(var_x);
 
   svg.append("text")
     .attr("class", "y label")
@@ -240,6 +241,6 @@ function plotKMeans(plotData){
     .attr("y", 0)
     .attr("dy", ".75em")
     .attr("transform", "rotate(-90)")
-    .text("y-coordinate");
-
+    .style("font-size","15px")
+    .text(var_y);
 }

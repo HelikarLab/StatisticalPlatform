@@ -13,7 +13,7 @@ function plotQQ(plotData){
 
   d3.selectAll("svg > *").remove();
 
-  var data = plotData.qqdata, linedata = plotData.linedata;
+  var data = plotData.qqdata, linedata = plotData.linedata, var_x = plotData.var_x, var_y = plotData.var_y;
   data = JSON.parse(data);
   linedata = JSON.parse(linedata);
 
@@ -209,7 +209,7 @@ function plotQQ(plotData){
     .attr("text-anchor", "end")
     .attr("x", w/2)
     .attr("y", h)
-    .text("x-coordinate");
+    .text(var_x);
 
   svg.append("text")
     .attr("class", "y label")
@@ -218,7 +218,7 @@ function plotQQ(plotData){
     .attr("y", 0)
     .attr("dy", ".75em")
     .attr("transform", "rotate(-90)")
-    .text("y-coordinate");
+    .text(var_y);
 
   svg.append("path")
       .datum(linedata)

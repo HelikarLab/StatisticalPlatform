@@ -430,7 +430,7 @@ var WholeThing = React.createClass(
 				var label_1 = arguments[1], label_2 = arguments[2], functions = arguments[3];
 				var col_1 = getSanitizedData(table, getIndex(table, label_1)), col_2 = getSanitizedData(table, getIndex(table, label_2));
 
-				this.refs.test_ref.setHeaders(["Test", label2 + " ~ " + label1]);
+				this.refs.test_ref.setHeaders(["Test", label_2 + " ~ " + label_1]);
 				this.refs.test_ref.displayOn();
 
 				// TODO: use state
@@ -508,7 +508,7 @@ var WholeThing = React.createClass(
 					}, function (session) {
 						session.getObject(null, {force: true}, function (out) {
 						d = "F-value: " + out[0]["F value"] + "\np: " + out[0]["Pr(>F)"];
-						anova_table.spliceRow(n, 0, 0, fn, d);
+						anova_table.spliceRow(n, 0, 0, "ANOVA", d);
 						console.log(anova_table.getData());
 					});
 					});

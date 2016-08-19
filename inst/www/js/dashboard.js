@@ -33,11 +33,11 @@ function addNewPlot(type, data){
 function plotDashboard(plotType, plotData){
 
   switch (plotType) {
-    case 'Dendogram':
+    case 'Cluster Dendrogram':
       plotDendogram(plotData);
       break;
 
-    case 'K-means clustering':
+    case 'K-Means Clustering':
       plotKMeans(plotData);
       break;
 
@@ -45,7 +45,7 @@ function plotDashboard(plotType, plotData){
       plotScatterMatrix(plotData);
       break;
 
-    case 'Q-Q plot':
+    case 'Q-Q Plot':
       plotQQ(plotData);
       break;
 
@@ -62,7 +62,7 @@ function plotDashboard(plotType, plotData){
       break;
 
     case 'Heatmap':
-      comatrixPlot(plotData);
+      plotHeatmap(plotData);
       break;
 
     case 'Line Plot':
@@ -77,6 +77,13 @@ function plotDashboard(plotType, plotData){
       plotHist(plotData);
       break;
 
+    case 'Time Series Analysis':
+      plotTimeSeries(plotData);
+      break;
+
+    case 'Correlation Plot' || 'Covariance Plot':
+      comatrixPlot(plotData);
+      break;
   }
 }
 

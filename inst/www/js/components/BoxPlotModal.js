@@ -36,9 +36,6 @@ var BoxPlotModal = React.createClass({
 					<Input type='select' label='Group' ref='group'>
 						{options_list}
 					</Input>
-					<Input type="text" label="X-axis name (optional)" ref='x_name' />
-					<Input type="text" label="Y-axis name (optional)" ref='y_name' />
-
 				</div>
 		        <div className='modal-footer'>
     			    <Button onClick={this.handleClick}>Submit</Button>
@@ -49,7 +46,7 @@ var BoxPlotModal = React.createClass({
 
 	handleClick: function() {
 		this.props.onRequestHide();
-		this.props.onClick(this, this.refs.first.getValue(), null, this.refs.group.getValue(), this.refs.x_name.getValue(), this.refs.y_name.getValue());
+		this.props.onClick(this, this.refs.first.getValue(), null, this.refs.group.getValue());
 	},
 
 	handleChange: function() {

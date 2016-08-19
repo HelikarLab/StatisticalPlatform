@@ -38,13 +38,12 @@ var ComatrixModal = React.createClass({
 
         <div className='modal-body'>
 					<Input type='select' label='Choose Analyses' ref='comatrix'>
-						<option value="cor">Correlation Matrix</option>
-						<option value="cov">Covariance Matrix</option>
+						<option value="cor">Correlation Plot</option>
+						<option value="cov">Covariance Plot</option>
 					</Input>
 
 					{inst}
 					 { this.state.showResults ? <ComatInstruction /> : null }
-
 				</div>
 
         <div className='modal-footer'>

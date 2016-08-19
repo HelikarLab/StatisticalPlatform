@@ -95,7 +95,7 @@ function makePlot(obj, props) {
 
 		var req = ocpu.rpc("dendogram", {data: data}, function(output){
         var dendogramData = output.message;
-				addNewPlot('Dendogram', dendogramData);
+				addNewPlot('Cluster Dendrogram', dendogramData);
 				plotDendogram(dendogramData);
       });
 
@@ -113,11 +113,13 @@ function makePlot(obj, props) {
 
 		var data = dataJSON, plotData = {};
 		plotData.kvalue = kvalue;
+		plotData.var_x = var_x;
+		plotData.var_y = var_y;
 
 		var req = ocpu.rpc("kmeansCluster", {data: data, var_x: var_x, var_y: var_y, kvalue: kvalue}, function(output){
 				var kmeansData = output.message;
 				plotData.kmeansData = kmeansData;
-				addNewPlot('K-means clustering', plotData);
+				addNewPlot('K-Means Clustering', plotData);
 				plotKMeans(plotData);
 			});
 
@@ -152,6 +154,8 @@ function makePlot(obj, props) {
 		ocpu.seturl("//public.opencpu.org/ocpu/github/HelikarLab/StatisticalPlatform/R");
 
 		var data = dataJSON, plotData = {};
+		plotData.var_x = var_x;
+		plotData.var_y = var_y;
 
 		var req = ocpu.rpc("q_qplot", {data: data, var_x: var_x, var_y}, function(output){
 				 	plotData.qqdata = output.qqdata;
@@ -170,13 +174,13 @@ function makePlot(obj, props) {
 
 		ocpu.seturl("//public.opencpu.org/ocpu/github/HelikarLab/StatisticalPlatform/R");
 
-		var data = dataJSON;
+		var data = dataJSON, plotData = {};
 
 		var req = ocpu.rpc("timeSeries", {data: data}, function(output){
-				var timeSeriesData = output.message;
-				var count = output.count;
-				addNewPlot('Time Series', timeSeriesData);
-				plotTimeSeries(timeSeriesData, count);
+				plotData.timeSeriesData = output.message;
+				plotData.count = output.count;
+				addNewPlot('Time Series Analysis', plotData);
+				plotTimeSeries(plotData);
 			});
 
 			//if R returns an error, alert the error message
@@ -197,6 +201,12 @@ function makePlot(obj, props) {
 												method: method
 											}, function(output){
 				var comatrixData = output.message;
+				if (method == "cor") {
+					method = "Correlation Plot";
+				}
+				else if (method == "cov") {
+					method = "Covariance Plot";
+				}
 				addNewPlot(method, comatrixData);
 				comatrixPlot(comatrixData);
 			});

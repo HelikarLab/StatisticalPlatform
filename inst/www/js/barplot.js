@@ -143,7 +143,7 @@ function plotGroupBar(data){
       .attr("y", 6)
       .attr("dy", ".71em")
       .style("text-anchor", "end")
-      .text("y-coordinate");
+      .text("");
 
   var state = svg.selectAll(".state")
       .data(data)

@@ -10,7 +10,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>
 */
 
 var classesNumber = 10,
-    cellSize = 24;
+    cellSize = 16;
 
 //#########################################################
 function plotHeatmap(data) {
@@ -22,9 +22,12 @@ function plotHeatmap(data) {
 
     data = JSON.parse(data);
 
+    var arr = data.data;
+    var row_number = data.data.length;
+    var col_number = data.columns.length;
+
     var tooltip = d3.select(heatmapId)
         .append("div")
-        .style("width", "600p")
         .style("position", "absolute")
         .style("visibility", "hidden");
 
@@ -37,9 +40,9 @@ function plotHeatmap(data) {
 
     //==================================================
     var viewerWidth = $(document).width();
-    var viewerHeight = $(document).height();
-    var viewerPosTop = 100;
-    var viewerPosLeft = 100;
+    var viewerHeight = $(document).width();
+    var viewerPosTop = 50;
+    var viewerPosLeft = 150;
 
     var legendElementWidth = cellSize * 2;
 
@@ -50,9 +53,6 @@ function plotHeatmap(data) {
     var svg;
 
     //==================================================
-      var arr = data.data;
-      var row_number = arr[0].length;
-      var col_number = arr[0].length;
 
       var max = arr[0][0], min = arr[0][0], val;
       for (var i = 0; i < row_number; i++) {
@@ -71,7 +71,7 @@ function plotHeatmap(data) {
         val = Math.abs(min);
 
       var list = [];
-      for (var i = -val; i <= val; i = i + (2*val)/9) {
+      for (var i = -val; i <= val; i = i + (2*val)/(classesNumber-1)) {
           list.push(i);
       }
 
@@ -159,7 +159,12 @@ function plotHeatmap(data) {
           })
           .on('mouseout', function(d, i) {
               d3.select('#colLabel_' + i).classed("hover", false);
-          });
+          })
+          .on("click", function(d, i) {
+               colSortOrder = !colSortOrder;
+               sortByValues("c", i, colSortOrder);
+               d3.select("#order").property("selectedIndex", 0);
+           });
 
       var row = svg.selectAll(".row")
           .data(data.data)

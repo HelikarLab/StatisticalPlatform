@@ -35,13 +35,9 @@ var PlotModal = React.createClass({
 						{options_list}
 					</Input>
 
-					<Input type='text' label='X-axis name (optional)' ref='xname' />
-
 					<Input type='select' label='Variable - Y' ref='second'>
 						{options_list}
 					</Input>
-
-					<Input type='text' label='Y-axis name (optional)' ref='yname' />
 
 					<Input type='select' label='Group' ref='group' disabled={this.state.is_group} >
 						{options_list}
@@ -57,9 +53,9 @@ var PlotModal = React.createClass({
 	handleClick: function() {
 		this.props.onRequestHide();
 		if (this.refs.boolgrp.getChecked())
-			this.props.onClick(this, this.refs.first.getValue(), this.refs.second.getValue(), this.refs.group.getValue(), this.refs.xname.getValue(), this.refs.yname.getValue());
+			this.props.onClick(this, this.refs.first.getValue(), this.refs.second.getValue(), this.refs.group.getValue());
 		else
-			this.props.onClick(this, this.refs.first.getValue(), this.refs.second.getValue(), null, this.refs.xname.getValue(), this.refs.yname.getValue());
+			this.props.onClick(this, this.refs.first.getValue(), this.refs.second.getValue(), null);
 	},
 
 	handleChange: function() {

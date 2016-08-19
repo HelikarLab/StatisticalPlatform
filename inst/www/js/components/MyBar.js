@@ -154,13 +154,13 @@ var MyBar = React.createClass(
 					<DropdownButton title="File">
 						<MenuItem onClick={this.handleClick}>Open</MenuItem>
 						<FileField ref="file"/>
-						<MenuItem onClick={this.saveClick}>Export image</MenuItem>
+						<MenuItem onClick={this.saveClick}>Export Image</MenuItem>
 
 					</DropdownButton>
 
 					<DropdownButton title="Data">
 						<MenuItem onClick={this.tableClick}>View/Hide</MenuItem>
-						<MenuItem onClick={this.exportClick}>Export data</MenuItem>
+						<MenuItem onClick={this.exportClick}>Export Data</MenuItem>
 					</DropdownButton>
 
 					<DropdownButton title="Plots">
@@ -202,7 +202,7 @@ var MyBar = React.createClass(
 						</ModalTrigger>
 
 						<ModalTrigger modal={<BivariateModal onClick={this.biClick} variables={this.props.variables} />}>
-							<MenuItem>Bivariate</MenuItem>
+							<MenuItem>Bivariate Descriptive Statistics</MenuItem>
 						</ModalTrigger>
 
 						<ModalTrigger modal={<TestsModal onClick={this.testClick} variables={this.props.variables} />}>
@@ -214,11 +214,11 @@ var MyBar = React.createClass(
 						</ModalTrigger>
 
 						<ModalTrigger modal={<QQPlotModal onClick={this.plotQQChart.bind(this, "plotQQ")} variables={this.props.variables}  />}>
-							<MenuItem>QQ plot</MenuItem>
+							<MenuItem>QQ Plot</MenuItem>
 						</ModalTrigger>
 
 						<ModalTrigger modal={<ComatrixModal onClick={this.plotComatrixChart.bind(this, "plotComatrix")} variables={this.props.variables}  />}>
-							<MenuItem>Correlation & Covariance Matrix</MenuItem>
+							<MenuItem>Correlation & Covariance</MenuItem>
 						</ModalTrigger>
 
 						<ModalTrigger modal={<PlotModal onClick={this.plotClick.bind(this, "regression")} variables={this.props.variables}  />}>
@@ -226,19 +226,19 @@ var MyBar = React.createClass(
 						</ModalTrigger>
 
 						<ModalTrigger modal={<TimeSeriesModal onClick={this.plotD3Chart.bind(this, "plotTimeSeries")} variables={this.props.variables}  />}>
-							<MenuItem>Time Series</MenuItem>
+							<MenuItem>Time Series Analysis</MenuItem>
 						</ModalTrigger>
 
 					</DropdownButton>
 
 					<DropdownButton title="Clustering">
 
-						<ModalTrigger modal={<DendogramModal onClick={this.plotD3Chart.bind(this, "plotDendogram")} variables={this.props.variables}  />}>
-							<MenuItem>Heirarichal Clustering</MenuItem>
+						<ModalTrigger modal={<KMeansModal onClick={this.plotKMeansChart.bind(this, "plotKMeans")} variables={this.props.variables}  />}>
+							<MenuItem>K-Means Clustering</MenuItem>
 						</ModalTrigger>
 
-						<ModalTrigger modal={<KMeansModal onClick={this.plotKMeansChart.bind(this, "plotKMeans")} variables={this.props.variables}  />}>
-							<MenuItem>K-means clustering</MenuItem>
+						<ModalTrigger modal={<DendogramModal onClick={this.plotD3Chart.bind(this, "plotDendogram")} variables={this.props.variables}  />}>
+							<MenuItem>Cluster Dendrogram</MenuItem>
 						</ModalTrigger>
 
 					</DropdownButton>

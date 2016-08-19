@@ -9,7 +9,9 @@ details. You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>
 */
 
-function plotTimeSeries(data, count){
+function plotTimeSeries(plotData){
+
+  var data = plotData.timeSeriesData, count = plotData.count;
 
   d3.selectAll("svg > *").remove();
 
@@ -165,7 +167,7 @@ function plotTimeSeries(data, count){
       .attr("x", -10)
       .attr("dy", ".71em")
       .style("text-anchor", "end")
-      .text("y-coordinate");
+      .text("");
 
   var issue = svg.selectAll(".issue")
       .data(categories) // Select nested data and append to new svg group elements
