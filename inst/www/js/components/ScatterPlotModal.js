@@ -31,7 +31,7 @@ var ScatterPlotModal = React.createClass({
     var inst, bold_style = {'fontSize': '15', 'fontWeight': 'bold'};
 
     if (!this.state.showResults) {
-      inst = <Button onClick={this.onClick}>?</Button>
+      inst = <Button onClick={this.onClick}>i</Button>
     }
     else {
       inst = <p style = {bold_style}>Description:</p>;

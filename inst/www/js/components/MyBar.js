@@ -155,7 +155,7 @@ var MyBar = React.createClass(
 						<MenuItem onClick={this.handleClick}>Open</MenuItem>
 						<FileField ref="file"/>
 						<MenuItem onClick={this.saveClick}>Export Image</MenuItem>
-
+					
 					</DropdownButton>
 
 					<DropdownButton title="Data">
@@ -198,7 +198,7 @@ var MyBar = React.createClass(
 					<DropdownButton title="Analyze">
 
 						<ModalTrigger modal={<ChoiceModal onClick={this.uniClick} variables={this.props.variables} />}>
-							<MenuItem>Univariate</MenuItem>
+							<MenuItem>Univariate Descriptive Statistics</MenuItem>
 						</ModalTrigger>
 
 						<ModalTrigger modal={<BivariateModal onClick={this.biClick} variables={this.props.variables} />}>

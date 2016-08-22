@@ -320,6 +320,7 @@ function makePlot(obj, props) {
 		plotBar(dataJSON, type, props.var_x, props.var_y);
 
 	if(type === "histogram"){
+
 		var plotData = {};
 		plotData.dataJSON = dataJSON;
 		plotData.var_x = props.var_x;
@@ -358,7 +359,7 @@ function plotBar(array, type, var_x, var_y) {
 		.datum(out)
 		.call(chart);
 
-		nv.utils.windowResize(chart.update);
+		//nv.utils.windowResize(chart.update);
 
 		return chart;
 	}.bind(this));
@@ -389,7 +390,7 @@ function realBox(myData, x_name, y_name) {
 		.datum(myData)
 		.call(chart);
 
-		nv.utils.windowResize(chart.update);
+		//nv.utils.windowResize(chart.update);
 
 		return chart;
 	});

@@ -65,7 +65,7 @@ function plotStandard(plotData) {
 			.datum(myData)
 			.call(chart);
 
-		nv.utils.windowResize(chart.update);
+		//nv.utils.windowResize(chart.update);
 
 		return chart;
 

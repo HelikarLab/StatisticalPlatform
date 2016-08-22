@@ -243,11 +243,12 @@ function comatrixPlot(data) {
               //console.log(d3.select(this));
           });
 
+      var x = (cellSize*col_number)+viewerPosLeft;
       var legend = svg.selectAll(".legend")
           .data(list)
         .enter().append("g")
           .attr("class", "legend")
-          .attr("transform", function(d, i) { return "translate(1000," + i * 20 + ")"; });
+          .attr("transform", function(d, i) { return "translate("+x+"," + i * 20 + ")"; });
 
       legend.append("rect")
           .attr("x", 0)

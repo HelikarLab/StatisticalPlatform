@@ -38,7 +38,6 @@ function plotHist(plotData) {
 				vals.push({"label": d, "value": counts[n]});
 			})
 			out = [{'key': 'out', 'values': vals}];
-			// console.log(out);
 
 			d3.selectAll("svg > *").remove();
 
@@ -56,7 +55,7 @@ function plotHist(plotData) {
 				.datum(out)
 				.call(chart);
 
-				nv.utils.windowResize(chart.update);
+				//nv.utils.windowResize(chart.update);
 
 				return chart;
 			}.bind(this));
