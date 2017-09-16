@@ -2,9 +2,6 @@
 
 Interactive Platform for Statistical Computing is a tool designed by <a href = "http://helikarlab.org/">Helikar Lab</a> (Computational Biology @ University of Nebraska-Lincoln) to provide a free web-based platform to perform various statistical computations without having any knowledge of the high level programming languages, which is required for most statistical technologies. Most statistical technologies require users to be familiar with the command line and/or some type of a higher level programming language, making statistics less accessible to those who are not familiar with these technologies.
 
-The tool has been deployed and is currently in its beta phase.<br>
-<b>Tool:</b> http://129.93.136.33/ocpu/library/StatisticalPlatform/www/components.html
-
 ## Development
 The project was introduced as a part of <a href = "https://summerofcode.withgoogle.com/">Google Summer of Code </a> (GSoC) in 2015. <br>
 The <b>first version</b> of the project utilizes the R server to build web-based interactive statistical analyses. Specifically, the following statistical functions were implemented in the first phase: Tabular data upload/export/visualization, descriptive statistics, t-tests (single-sample, independent sample, paired), graphing (2D/3D scatter plots, line, bar charts, box plots, histograms) and one/multi-way ANOVA.
@@ -38,15 +35,15 @@ opencpu$browse("/library/StatisticalPlatfrom/www")
 ```
 ## Features
 
+#### Data Manipulation
 <ul>
-  Data Manipulation
   <li>Tabular data upload/export (.csv files)</li>
   <li>Tabular data viewing and editing</li>
   <li>Data preprocessing (sorting, subset)</li>
 </ul>
 
+#### Analysis
 <ul>
-  Analysis
   <li>Descriptive Statistics (mean, beta, standard deviation, variance, skewness, kurtosis)</li>
   <li>t-tests (Welch, Student, Paired)</li>
   <li>One/Multi-way ANOVA</li>
@@ -56,8 +53,8 @@ opencpu$browse("/library/StatisticalPlatfrom/www")
   <li>Time Series Analysis</li>
 </ul>
 
+#### Plots
 <ul>
-  Plots
   <li>Line plots</li>
   <li>Histogram</li>
   <li>Bar plots (simple, grouped & stacked)</li>
@@ -67,8 +64,16 @@ opencpu$browse("/library/StatisticalPlatfrom/www")
   <li>Heatmap</li>
 </ul>
 
+#### Clustering
 <ul>
-  Clustering
   <li>K-Means clustering</li>
   <li>Cluster dendogram</li>
 </ul>
+
+## Contributors
+
+Akram Mohammed amohammed3@unl.edu  
+
+Shubham Kumar shubhamkmr47@gmail.com  
+
+Vinit Ravishankar vinit.ravishankar@gmail.com  
