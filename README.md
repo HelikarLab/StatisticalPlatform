@@ -74,16 +74,17 @@ opencpu$browse("/library/StatisticalPlatfrom/www")
 
 ## Contributors
 
+Tejasav Khattar tejasav1997@gmail.com
+
+Achilles Rasquinha achillesrasquinha@gmail.com 
+
 Akram Mohammed akrammohd@gmail.com 
 
 Tomas Helikar thelikar2@unl.edu 
 
-Achilles Rasquinha achillesrasquinha@gmail.com 
-
-Tejasav Khattar tejasav1997@gmail.com
-
 
 ***Previous contributors*** 
+
 Shubham Kumar shubhamkmr47@gmail.com 
 
 Vinit Ravishankar vinit.ravishankar@gmail.com 
