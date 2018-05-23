@@ -8,7 +8,7 @@ The <b>first version</b> of the project utilizes the R server to build web-based
 
 As part of the <b>second phase</b> in GSoC 2016, the focus was to implement the statistical functions such as clustering, classification, time series analysis, regression models, correlation & covariance computations, heatmaps and various other plots.
 
-**GSoC 2018** (third and final phase)
+**GSoC 2018** (third and final phase in progress ...)
 
 ###Technologies
 <ul>
