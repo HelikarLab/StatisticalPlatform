@@ -33,7 +33,7 @@ install_github("HelikarLab/StatisticalPlatform")
 
 #open in single-user server
 library(opencpu)
-opencpu$browse("/library/StatisticalPlatfrom/www")
+ocpu_start_app("StatisticalPlatform")
 ```
 ## Features
 
