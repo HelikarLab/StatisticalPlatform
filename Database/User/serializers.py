@@ -2,7 +2,7 @@ from rest_framework import serializers
 from . import models
 
 from rest_auth.registration.serializers import RegisterSerializer
-
+# Defining Custom serializer for additional fields
 class MyRegisterSerializer(RegisterSerializer):
     first_name = serializers.CharField()
     last_name = serializers.CharField()

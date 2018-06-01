@@ -29,7 +29,7 @@ ALLOWED_HOSTS = []
 
 AUTH_USER_MODEL = 'User.CustomUser'
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' # for development only
 
 SITE_ID = 1
 
@@ -114,8 +114,8 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
-REST_AUTH_REGISTER_SERIALIZERS = { 'REGISTER_SERIALIZER': 'api.serializers.MyRegisterSerializer' }
+#path to custom serializer
+REST_AUTH_REGISTER_SERIALIZERS = { 'REGISTER_SERIALIZER': 'User.serializers.MyRegisterSerializer' }
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
