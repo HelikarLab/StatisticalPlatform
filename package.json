@@ -1,0 +1,31 @@
+{
+  "name": "StatisticalPlatform",
+  "version": "1.0.0",
+  "description": "In a python3 virtualenv 1) git clone https://github.com/tejasavkhattar/StatisticalPlatform.git 2) cd StatisticalPlatform 3) git checkout develop 4) cd Database 5) pip install -r requirements.txt 6) python manage.py makemigrations 7) python manage.py migrate 8) python manage.py createsuperuser 9) python manage.py runserver",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack --mode development ./Database/frontend/src/index.js --output ./Database/frontend/static/js/main.js",
+    "build": "webpack --mode production ./Database/frontend/src/index.js --output ./Database/frontend/static/js/main.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tejasavkhattar/StatisticalPlatform.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tejasavkhattar/StatisticalPlatform/issues"
+  },
+  "homepage": "https://github.com/tejasavkhattar/StatisticalPlatform#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "webpack": "^4.12.0",
+    "webpack-cli": "^3.0.3"
+  }
+}
