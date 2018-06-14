@@ -1,1 +1,8 @@
 node_modules/
+StatisticalPlatform/db.sqlite3
+StatisticalPlatform/__pycache__/*
+StatisticalPlatform/StatisticalPlatform/migrations/__pycache__/*
+StatisticalPlatform/StatisticalPlatform/__pycache__/*
+StatisticalPlatform/*.pyc
+StatisticalPlatform/.DS_Store
+

@@ -1,7 +1,0 @@
-db.sqlite3
-Database/__pycache__/*
-User/migrations/__pycache__/*
-api/migrations/__pycache__/*
-*.pyc
-.DS_Store
-
