@@ -1,7 +1,7 @@
 from rest_framework import generics
 
-from . import models
-from . import serializers
+from StatisticalPlatform import models
+from StatisticalPlatform import serializers
 
 class UserListView(generics.ListCreateAPIView):
     queryset = models.CustomUser.objects.all()

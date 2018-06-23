@@ -5,4 +5,8 @@ StatisticalPlatform/StatisticalPlatform/migrations/__pycache__/*
 StatisticalPlatform/StatisticalPlatform/__pycache__/*
 StatisticalPlatform/*.pyc
 StatisticalPlatform/.DS_Store
-
+StatisticalPlatform/StatisticalPlatform/forms/__pycache__/*
+StatisticalPlatform/StatisticalPlatform/models/__pycache__/*
+StatisticalPlatform/StatisticalPlatform/serializers/__pycache__/*
+StatisticalPlatform/StatisticalPlatform/tests/__pycache__/*
+StatisticalPlatform/StatisticalPlatform/views/__pycache__/*
