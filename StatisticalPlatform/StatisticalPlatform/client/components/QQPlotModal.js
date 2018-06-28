@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Button, Modal, Checkbox, FormGroup, ControlLabel, FormControl} from 'react-bootstrap';
 
 class QQPlotModal extends Component {
 
@@ -7,6 +8,8 @@ class QQPlotModal extends Component {
     this.state = {
       showResults: false
     };
+    this.onClick = this.onClick.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   onClick() {
@@ -40,28 +43,34 @@ class QQPlotModal extends Component {
 		});
 
     return(
-      <Modal {...this.props} title="QQ Plot">
-
-        <div className='modal-body'>
-          <Input type='select' label='Variable - X' ref='first'>
-            {options_list}
-          </Input>
-
-          <Input type='select' label='Variable - Y' ref='second'>
-            {options_list}
-          </Input>
-
+      <div className="modal-container">
+        <Modal.Header closeButton >
+          <Modal.Title id="contained-modal-title">
+            Choose Data
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <form>
+            <FormGroup controlId="formControlsSelect">
+              <ControlLabel>Variable - X</ControlLabel>
+            <FormControl componentClass="select" placeholder="select" ref="first">
+                {options_list}
+              </FormControl>
+            </FormGroup>
+            <FormGroup controlId="formControlsSelect">
+              <ControlLabel>Variable - Y</ControlLabel>
+            <FormControl componentClass="select" placeholder="select" ref="second">
+                {options_list}
+              </FormControl>
+            </FormGroup>
+          </form>
           {inst}
-           { this.state.showResults ? <QQPlotInstruction /> : null }
-
-        </div>
-
-        <div className='modal-footer'>
+					 { this.state.showResults ? <QQPlotInstruction /> : null }
+        </Modal.Body>
+        <Modal.Footer>
           <Button onClick={this.handleClick}>Submit</Button>
-        </div>
-
-      </Modal>
-
+        </Modal.Footer>
+      </div>
     );
   }
 }

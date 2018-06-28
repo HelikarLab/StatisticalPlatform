@@ -1,6 +1,12 @@
 import React, {Component} from 'react';
+import {Button, Modal, Checkbox, FormGroup, ControlLabel, FormControl} from 'react-bootstrap';
 
 class DashboardModal extends Component {
+
+  constructor(props) {
+    super(props);
+    this.handleClick = this.handleClick.bind(this);
+  }
 
   handleClick (id) {
     this.props.onRequestHide();
@@ -24,16 +30,20 @@ class DashboardModal extends Component {
 
     if (count == 0) {
       return (
-        <Modal {...this.props} title="Dashboard">
-          <div className='modal-body'>
-
-            No analysis done yet!!!
-
-          </div>
-          <div className='modal-footer'>
+        <div className="modal-container" >
+          <Modal.Header closeButton >
+            <Modal.Title id="contained-modal-title">
+              Dashboard
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            No Analysis Done Yet
+          </Modal.Body>
+          <Modal.Footer>
             <Button onClick={this.handleClick}>Submit</Button>
-          </div>
-        </Modal>
+          </Modal.Footer>
+        </div>
+
       );
     }
 
@@ -51,11 +61,19 @@ class DashboardModal extends Component {
     }
 
     return(
-      <Modal {...this.props} title="Dashboard">
-				<div className='modal-body'>
-					{button_list}
-				</div>
-			</Modal>
+      <div className="modal-container" >
+        <Modal.Header closeButton >
+          <Modal.Title id="contained-modal-title">
+            Dashboard
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {button_list}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={this.handleClick}>Submit</Button>
+        </Modal.Footer>
+      </div>
     );
   }
 }

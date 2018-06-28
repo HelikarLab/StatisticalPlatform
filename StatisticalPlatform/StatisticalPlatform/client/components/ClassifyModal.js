@@ -1,6 +1,13 @@
 import React, {Component} from 'react';
-
+import {Button, Modal, Checkbox, FormGroup, ControlLabel, FormControl, FieldGroup} from 'react-bootstrap';
 class ClassifyModal extends Component {
+
+  constructor(props) {
+    super(props);
+    this.evalClick = this.evalClick.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+    this.setText = this.setText.bind(this);
+  }
 
   setText(text) {
 		document.getElementById("eval").innerHTML = text;
@@ -27,6 +34,7 @@ class ClassifyModal extends Component {
     );
 	}
 
+
   render() {
     const options_list = [];
 
@@ -34,30 +42,42 @@ class ClassifyModal extends Component {
 			options_list.push(<option value={variable}>{variable}</option>);
 		});
 
+
     return(
-      <Modal {...this.props} title="Choose data">
-				<div className='modal-body'>
+      <div className="modal-container">
+        <Modal.Header closeButton >
+          <Modal.Title id="contained-modal-title">
+            Choose Data
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <form>
+            <FormGroup controlId="formControlsSelect">
+              <ControlLabel>Output Column</ControlLabel>
+            <FormControl componentClass="select" placeholder="select" ref="vars">
+                {options_list}
+              </FormControl>
+            </FormGroup>
 
-					<Input type='select' label='Output column' ref='vars'>
-						{options_list}
-					</Input>
-
-					<Input type='text' label='Training set size (%)' ref='tsize' />
-
-					<div id="eval"></div>
+            <FormGroup controlId="formControlsText">
+              <ControlLabel>Training set size (%)</ControlLabel>
+            <FormControl ref='tsize' type='text' />
+            </FormGroup>
+            <div id="eval"></div>
 
 					<Button onClick={this.evalClick}>Evaluate</Button>
+        <br/> 
+      <ControlLabel>File</ControlLabel>
+          <input type='file' label='File' ref='file' />
 
 
-				    <Input type='file' label='File' ref='file' />
 
-				</div>
-
-		        <div className='modal-footer'>
-    			    <Button onClick={this.handleClick}>Submit</Button>
-        		</div>
-
-			</Modal>
+          </form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={this.handleClick}>Submit</Button>
+        </Modal.Footer>
+      </div>
 
     );
   }

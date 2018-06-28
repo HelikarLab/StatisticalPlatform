@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Button, Modal, Checkbox, FormGroup, ControlLabel, FormControl} from 'react-bootstrap';
 
 class ScatterMatrixModal extends Component {
   constructor(props) {
@@ -6,6 +7,8 @@ class ScatterMatrixModal extends Component {
     this.state = {
       is_group: true
     };
+    this.onClick = this.onClick.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
   onClick() {
        this.setState({ showResults: true });
@@ -25,23 +28,25 @@ class ScatterMatrixModal extends Component {
 			inst = <p style = {bold_style}>Description:</p>;
 		}
     return(
-      <Modal {...this.props} title="Scatter Matrix Plot">
-
-				<div className='modal-body'>
-				{inst}
-				 { this.state.showResults ? <ScatterMatrixInstruction /> : null }
-				</div>
-
-				<div className='modal-footer'>
-			    <Button onClick={this.handleClick}>Submit</Button>
-    		</div>
-
-			</Modal>
+      <div className="modal-container">
+        <Modal.Header closeButton >
+          <Modal.Title id="contained-modal-title">
+            Scatter Matrix Plot
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {inst}
+          { this.state.showResults ? <ScatterPlotInstruction /> : null }
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={this.handleClick}>Submit</Button>
+        </Modal.Footer>
+      </div>
     );
   }
 }
 
-class ScatterMatrixInstruction extends Component{
+class ScatterPlotInstruction extends Component{
   render()  {
     const style = {'fontFamily': 'DROID SANS MONO'};
     return(

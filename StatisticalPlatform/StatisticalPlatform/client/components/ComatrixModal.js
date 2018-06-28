@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Button, Modal, Checkbox, FormGroup, ControlLabel, FormControl} from 'react-bootstrap';
 
 class ComatrixModal extends Component {
 
@@ -7,6 +8,8 @@ class ComatrixModal extends Component {
     this.state = {
       showResults: false
     };
+    this.onClick = this.onClick.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   onClick() {
@@ -34,23 +37,29 @@ class ComatrixModal extends Component {
 		}
 
     return(
-      <Modal {...this.props} title="Correlation and Covariance Plots">
-
-        <div className='modal-body'>
-          <Input type='select' label='Choose Analyses' ref='comatrix'>
-            <option value="cor">Correlation Plot</option>
-            <option value="cov">Covariance Plot</option>
-          </Input>
-
+      <div className="modal-container">
+        <Modal.Header closeButton >
+          <Modal.Title id="contained-modal-title">
+            Choose Data
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <form>
+            <FormGroup controlId="formControlsSelectMultiple">
+              <ControlLabel>Choose Analysis</ControlLabel>
+            <FormControl componentClass="select" ref='comatrix' >
+              <option value="cor">Correlation Plot</option>
+              <option value="cov">Covariance Plot</option>
+              </FormControl>
+            </FormGroup>
+          </form>
           {inst}
-           { this.state.showResults ? <ComatInstruction /> : null }
-        </div>
-
-        <div className='modal-footer'>
+					 { this.state.showResults ? <ComatInstruction /> : null }
+        </Modal.Body>
+        <Modal.Footer>
           <Button onClick={this.handleClick}>Submit</Button>
-        </div>
-
-      </Modal>
+        </Modal.Footer>
+      </div>
     );
   }
 }

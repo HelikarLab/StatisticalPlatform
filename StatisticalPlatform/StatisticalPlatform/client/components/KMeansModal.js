@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-
+import {Button, Modal, Checkbox, FormGroup, ControlLabel, FormControl, FieldGroup} from 'react-bootstrap';
+import NumericInput from 'react-numeric-input';
 class KMeansModal extends Component {
 
   constructor(props) {
@@ -7,6 +8,8 @@ class KMeansModal extends Component {
     this.state = {
       showResults: false
     };
+    this.onClick = this.onClick.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   onClick() {
@@ -48,29 +51,37 @@ class KMeansModal extends Component {
 
 
     return(
-      <Modal {...this.props} title="Kmeans Clustering">
-
-				<div className='modal-body'>
-
-					<Input type='select' label='Variable - X' ref='first'>
-						{options_list}
-					</Input>
-
-					<Input type='select' label='Variable - Y' ref='second'>
-						{options_list}
-					</Input>
-
-					<Input type="number" label="Number of clusters (k)" ref="kvalue" pattern="[0-9]*" min = "1" step = "1"/>
-
-					{inst}
+      <div className="modal-container">
+        <Modal.Header closeButton >
+          <Modal.Title id="contained-modal-title">
+            Choose Data
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <form>
+            <FormGroup controlId="formControlsSelect">
+              <ControlLabel>Variable - X</ControlLabel>
+              <FormControl componentClass="select" placeholder="select" ref="first">
+                {options_list}
+              </FormControl>
+              <br/>
+              <ControlLabel>Variable - Y</ControlLabel>
+              <FormControl componentClass="select" placeholder="select" ref="second">
+                {options_list}
+              </FormControl>
+              <br/>
+              <ControlLabel>Number of clusters (k)</ControlLabel>
+            <NumericInput className="form-control" ref="kvalue"/>
+            </FormGroup>
+          </form>
+          {inst}
 					{ this.state.showResults ? <KMeansInstruction /> : null }
-				</div>
 
-				<div className='modal-footer'>
-			    <Button onClick={this.handleClick}>Submit</Button>
-    		</div>
-
-			</Modal>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={this.handleClick}>Submit</Button>
+        </Modal.Footer>
+      </div>
     );
   }
 }

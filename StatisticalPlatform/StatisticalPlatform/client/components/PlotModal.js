@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Button, Modal, Checkbox, FormGroup, ControlLabel, FormControl} from 'react-bootstrap';
 
 class PlotModal extends Component {
   constructor(props) {
@@ -6,6 +7,8 @@ class PlotModal extends Component {
     this.state = {
       is_group: true
     };
+    this.handleClick = this.handleClick.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   handleClick(){
@@ -24,9 +27,10 @@ class PlotModal extends Component {
       );
   }
 
-  handleChange() {
+  handleChange(){
+  
     this.setState({is_group: !this.state.is_group});
-  }
+  };
 
 
   render(){
@@ -38,25 +42,41 @@ class PlotModal extends Component {
     });
 
     return(
-      <Modal {...this.props} title="Choose data">
-				<div className='modal-body'>
-					<Input type='checkbox' label='Group' ref='boolgrp' onChange={this.handleChange} />
-					<Input type='select' label='Variable - X' ref='first'>
-						{options_list}
-					</Input>
+      <div className="modal-container" style={{ height: 400 }}>
+          <Modal.Header closeButton >
+            {/* <button onClick={()=>{this.props.onClose({showLinePlot: false})}}>close</button> */}
+            <Modal.Title id="contained-modal-title">
+              Choose Data
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <form>
+            <Checkbox value={this.state.is_group} onChange={this.handleChange} >
+      Group
+    </Checkbox>
 
-					<Input type='select' label='Variable - Y' ref='second'>
-						{options_list}
-					</Input>
+    <FormGroup controlId="formControlsSelect">
+      <ControlLabel>Variable - X</ControlLabel>
+      <FormControl componentClass="select" placeholder="select">
+        {options_list}
+      </FormControl>
 
-					<Input type='select' label='Group' ref='group' disabled={this.state.is_group} >
-						{options_list}
-					</Input>
-				</div>
-        <div className='modal-footer'>
-			    <Button onClick={this.handleClick}>Submit</Button>
-    		</div>
-			</Modal>
+      <ControlLabel>Variable - Y</ControlLabel>
+      <FormControl componentClass="select" placeholder="select">
+        {options_list}
+      </FormControl>
+
+      <ControlLabel>Group</ControlLabel>
+      <FormControl componentClass="select" placeholder="select" disabled={this.state.is_group}>
+        {options_list}
+      </FormControl>
+    </FormGroup>
+  </form>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={this.handleClick}>Submit</Button>
+          </Modal.Footer>
+      </div>
 
     );
   }

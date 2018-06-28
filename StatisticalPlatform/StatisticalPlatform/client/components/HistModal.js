@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Button, Modal, Checkbox, FormGroup, ControlLabel, FormControl} from 'react-bootstrap';
 
 class HistModal extends Component {
   constructor(props) {
@@ -6,6 +7,8 @@ class HistModal extends Component {
     this.state = {
       is_group: true
     };
+    this.handleClick = this.handleClick.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   handleClick() {
@@ -18,6 +21,7 @@ class HistModal extends Component {
 	}
 
 	handleChange() {
+
 		this.setState({is_group: !this.state.is_group});
 	}
 
@@ -25,24 +29,41 @@ class HistModal extends Component {
     const options_list = [];
 		const wololo="enabled";
 
-		this.props.variables.forEach(function (variable) {
+		this.props.variables.forEach( (variable) => {
 			options_list.push(<option value={variable}>{variable}</option>);
 		});
     return(
-      <Modal {...this.props} title="Choose data">
-        <div className='modal-body'>
+      <div className="modal-container" style={{ height: 400 }}>
+          <Modal.Header closeButton >
+            {/* <button onClick={()=>{this.props.onClose({showLinePlot: false})}}>close</button> */}
+            <Modal.Title id="contained-modal-title">
+              Choose Data
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <form>
+            <Checkbox value={this.state.is_group} onChange={this.handleChange} inputRef={ref => {this.boolgrp = ref;}} >
+      Group
+    </Checkbox>
 
-          <Input type='checkbox' label='Group' ref='boolgrp' onChange={this.handleChange} />
-          <Input type='select' label='Variable' ref='first'>
-            {options_list}
-          </Input>
+    <FormGroup controlId="formControlsSelect">
+      <ControlLabel>Variables</ControlLabel>
+      <FormControl componentClass="select" placeholder="select">
+        {options_list}
+      </FormControl>
 
-          <Input type='text' label='Bins' ref='group' disabled={this.state.is_group} />
-        </div>
-            <div className='modal-footer'>
-              <Button onClick={this.handleClick}>Submit</Button>
-            </div>
-      </Modal>
+
+      <ControlLabel>Bins</ControlLabel>
+      <FormControl componentClass="select" placeholder="select" disabled={this.state.is_group}>
+        {options_list}
+      </FormControl>
+    </FormGroup>
+  </form>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={this.handleClick}>Submit</Button>
+          </Modal.Footer>
+      </div>
 
     );
   }

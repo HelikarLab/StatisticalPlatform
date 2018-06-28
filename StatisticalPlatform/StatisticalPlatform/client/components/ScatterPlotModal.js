@@ -1,4 +1,5 @@
-import React, {Component} from 'react'
+import React, {Component} from 'react';
+import {Button, Modal, Checkbox, FormGroup, ControlLabel, FormControl} from 'react-bootstrap';
 
 class ScatterPlotModal extends Component {
   constructor(props) {
@@ -10,6 +11,12 @@ class ScatterPlotModal extends Component {
       is_logarithmic: false,
       showResults: false
     };
+    this.onClick = this.onClick.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+    this.handleChange1 = this.handleChange1.bind(this);
+    this.handleChange2 = this.handleChange2.bind(this);
+    this.handleChange3 = this.handleChange3.bind(this);
+    this.handleChange4 = this.handleChange4.bind(this);
   }
 
   onClick() {
@@ -60,31 +67,42 @@ class ScatterPlotModal extends Component {
 		});
 
     return(
-      <Modal {...this.props} title="Choose data">
-        <div className='modal-body'>
-
-          <Input type='select' label='Variable - X' ref='first'>
-            {options_list}
-          </Input>
-
-          <Input type='select' label='Variable - Y' ref='second'>
-            {options_list}
-          </Input>
-
-          <Input type='checkbox' label='Straight Trendline' ref='straight' onChange={this.handleChange1} />
-          <Input type='checkbox' label='Exponential Trendline' ref='exponential' onChange={this.handleChange2} />
-          <Input type='checkbox' label='Polynomial Trendline' ref='polynomial' onChange={this.handleChange3} />
-          <Input type='checkbox' label='Logarithmic Trendline' ref='logarithmic' onChange={this.handleChange4} />
-
+      <div className="modal-container">
+        <Modal.Header closeButton >
+          <Modal.Title id="contained-modal-title">
+            Choose Data
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <FormGroup controlId="formControlsSelect">
+            <ControlLabel>Variable - X</ControlLabel>
+          <FormControl componentClass="select" placeholder="select" ref='first' >
+              {options_list}
+            </FormControl>
+            <ControlLabel>Variable - Y</ControlLabel>
+          <FormControl componentClass="select" placeholder="select" ref='second' >
+              {options_list}
+            </FormControl>
+          </FormGroup>
+          <Checkbox  onChange={this.handleChange1} inputRef={ref => {this.straight= ref;}} >
+            Straight Trendline
+          </Checkbox>
+          <Checkbox  onChange={this.handleChange2} inputRef={ref => {this.exponential= ref;}} >
+            Exponential Trendline
+          </Checkbox>
+          <Checkbox  onChange={this.handleChange3} inputRef={ref => {this.polynomial= ref;}} >
+            Polynomial Trendline
+          </Checkbox>
+          <Checkbox  onChange={this.handleChange4} inputRef={ref => {this.logarithmic= ref;}} >
+            Logarithmic Trendline
+          </Checkbox>
           {inst}
            { this.state.showResults ? <ScatterPlotInstruction /> : null }
-
-        </div>
-        <div className='modal-footer'>
+        </Modal.Body>
+        <Modal.Footer>
           <Button onClick={this.handleClick}>Submit</Button>
-        </div>
-      </Modal>
-
+        </Modal.Footer>
+      </div>
     );
   }
 }

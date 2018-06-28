@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Button, Modal, Checkbox, FormGroup, ControlLabel, FormControl} from 'react-bootstrap';
 
 class AnovaModal extends Component {
   constructor(props){
@@ -22,25 +23,32 @@ class AnovaModal extends Component {
 		});
 
     return(
-      <Modal {...this.props} title="Choose data">
-				<div className='modal-body'>
-
-					<Input type='select' label='Variables' ref='vars' multiple>
-						{options_list}
-					</Input>
-
-					<Input type='select' label='Functions' ref='fn' multiple>
-						<option value='anova'>ANOVA</option>
-					</Input>
-
-
-
-				</div>
-		        <div className='modal-footer'>
-    			    <Button onClick={this.handleClick}>Submit</Button>
-        		</div>
-			</Modal>
-
+      <div className="modal-container">
+        <Modal.Header closeButton >
+          <Modal.Title id="contained-modal-title">
+            Choose Data
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <form>
+            <FormGroup controlId="formControlsSelect">
+              <ControlLabel>Variables</ControlLabel>
+            <FormControl componentClass="select" placeholder="select" ref="vars" multiple>
+                {options_list}
+              </FormControl>
+            </FormGroup>
+            <FormGroup controlId="formControlsSelectMultiple">
+              <ControlLabel>Functions</ControlLabel>
+            <FormControl componentClass="select" ref='fn' multiple>
+                <option value='anova'>ANOVA</option>
+              </FormControl>
+            </FormGroup>
+          </form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={this.handleClick}>Submit</Button>
+        </Modal.Footer>
+      </div>
     );
   }
 }

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-
+import {Button, Modal, Checkbox, FormGroup, ControlLabel, FormControl} from 'react-bootstrap';
 class TimeSeriesModal extends Component {
 
   constructor(props) {
@@ -7,6 +7,8 @@ class TimeSeriesModal extends Component {
     this.state = {
       showResults: false
     };
+    this.onClick = this.onClick.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   onClick() {
@@ -29,18 +31,20 @@ class TimeSeriesModal extends Component {
       inst = <p style = {bold_style}>Description:</p>;
     }
     return(
-      <Modal {...this.props} title="Time Series Analysis">
-
-				<div className='modal-body'>
-				{inst}
-				 { this.state.showResults ? <DendogramInstruction /> : null }
-				</div>
-
-				<div className='modal-footer'>
-			    <Button onClick={this.handleClick}>Submit</Button>
-    		</div>
-
-			</Modal>
+      <div className="modal-container">
+        <Modal.Header closeButton >
+          <Modal.Title id="contained-modal-title">
+            Time Series Analysis
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {inst}
+          { this.state.showResults ? <DendogramInstruction /> : null }
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={this.handleClick}>Submit</Button>
+        </Modal.Footer>
+      </div>
 
     );
   }
