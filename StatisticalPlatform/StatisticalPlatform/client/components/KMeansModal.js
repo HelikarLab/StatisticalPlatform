@@ -6,30 +6,27 @@ class KMeansModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showResults: false
+      showResults: false,
+      show: false
     };
-    this.onClick = this.onClick.bind(this);
-    this.handleClick = this.handleClick.bind(this);
   }
 
-  onClick() {
+  handleClose = () => {
+    this.setState({ show: false });
+  }
+
+  onClick = () => {
        this.setState({ showResults: true });
   }
 
-  handleClick() {
-		const k = this.refs.kvalue.getValue();
-		if (k > 0 || parseFloat(k) === k >>> 0) {
-			this.props.onRequestHide();
+  handleClick = () => {
+			this.props.onClose({showKMeans: false});
 			this.props.onClick(
         this,
-        this.refs.first.getValue(),
-        this.refs.second.getValue(),
-        this.refs.kvalue.getValue()
+        this.first.value,
+        this.second.value,
+        this.kvalue.value
       );
-		}
-		else {
-			alert("Value of 'K' is a positive integer");
-		}
 	}
 
   render() {
@@ -52,7 +49,7 @@ class KMeansModal extends Component {
 
     return(
       <div className="modal-container">
-        <Modal.Header closeButton >
+        <Modal.Header >
           <Modal.Title id="contained-modal-title">
             Choose Data
           </Modal.Title>
@@ -61,17 +58,17 @@ class KMeansModal extends Component {
           <form>
             <FormGroup controlId="formControlsSelect">
               <ControlLabel>Variable - X</ControlLabel>
-              <FormControl componentClass="select" placeholder="select" ref="first">
+            <FormControl componentClass="select" placeholder="select" inputRef={ref => { this.first = ref; }}>
                 {options_list}
               </FormControl>
               <br/>
               <ControlLabel>Variable - Y</ControlLabel>
-              <FormControl componentClass="select" placeholder="select" ref="second">
+            <FormControl componentClass="select" placeholder="select" inputRef={ref => { this.second = ref; }}>
                 {options_list}
               </FormControl>
               <br/>
               <ControlLabel>Number of clusters (k)</ControlLabel>
-            <NumericInput className="form-control" ref="kvalue"/>
+            <NumericInput min={ 0 } className="form-control" ref={this.kvalue}/>
             </FormGroup>
           </form>
           {inst}
@@ -79,7 +76,8 @@ class KMeansModal extends Component {
 
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={this.handleClick}>Submit</Button>
+          <Button onClick={()=>{this.props.onClose({showKMeans: false})}}>Close</Button>
+          <Button bsStyle= "success"  onClick={this.handleClick} type="submit">Submit</Button>
         </Modal.Footer>
       </div>
     );

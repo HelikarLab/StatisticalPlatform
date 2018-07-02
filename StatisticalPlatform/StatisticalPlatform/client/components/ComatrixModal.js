@@ -1,3 +1,18 @@
+/*
+copyright 2018 Helikar Lab
+
+Developed by Achilles Gasper Rasquinah, Tejasav Khattar, Shubham Kumar, Vinit Ravishankar and Akram Mohammed
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later
+version. This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+details. You should have received a copy of the GNU General Public License
+along with this program. If not, see <http://www.gnu.org/licenses/>
+*/
+
 import React, {Component} from 'react';
 import {Button, Modal, Checkbox, FormGroup, ControlLabel, FormControl} from 'react-bootstrap';
 
@@ -6,21 +21,24 @@ class ComatrixModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showResults: false
+      showResults: false,
+      show: false
     };
-    this.onClick = this.onClick.bind(this);
-    this.handleClick = this.handleClick.bind(this);
   }
 
-  onClick() {
-        this.setState({ showResults: true });
+  handleClose = () => {
+    this.setState({ show: false });
+  }
+
+  onClick = () => {
+    this.setState({ showResults: true });
 	}
 
-  handleClick() {
-		this.props.onRequestHide();
+  handleClick = () => {
+		this.props.onClose({showComatrix: false});
 		this.props.onClick(
       this,
-      this.refs.comatrix.getValue()
+      this.comatrix.value
     );
 	}
 
@@ -38,7 +56,7 @@ class ComatrixModal extends Component {
 
     return(
       <div className="modal-container">
-        <Modal.Header closeButton >
+        <Modal.Header>
           <Modal.Title id="contained-modal-title">
             Choose Data
           </Modal.Title>
@@ -47,7 +65,7 @@ class ComatrixModal extends Component {
           <form>
             <FormGroup controlId="formControlsSelectMultiple">
               <ControlLabel>Choose Analysis</ControlLabel>
-            <FormControl componentClass="select" ref='comatrix' >
+            <FormControl componentClass="select" inputRef={ref => { this.comatrix = ref; }} >
               <option value="cor">Correlation Plot</option>
               <option value="cov">Covariance Plot</option>
               </FormControl>
@@ -57,7 +75,8 @@ class ComatrixModal extends Component {
 					 { this.state.showResults ? <ComatInstruction /> : null }
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={this.handleClick}>Submit</Button>
+          <Button onClick={()=>{this.props.onClose({showComatrix: false})}}>Close</Button>
+          <Button bsStyle= "success"  onClick={this.handleClick} type="submit">Submit</Button>
         </Modal.Footer>
       </div>
     );

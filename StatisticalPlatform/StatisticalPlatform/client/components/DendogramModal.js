@@ -5,18 +5,21 @@ class DendogramModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showResults: false
+      showResults: false,
+      show: false
     };
-    this.onClick = this.onClick.bind(this);
-    this.handleClick = this.handleClick.bind(this);
   }
 
-  onClick() {
-       this.setState({ showResults: true });
+  handleClose = () => {
+    this.setState({ show: false });
   }
 
-  handleClick() {
-		this.props.onRequestHide();
+  onClick = () => {
+    this.setState({ showResults: true });
+  }
+
+  handleClick = () => {
+		this.props.onClose({showDendo: false});
 		this.props.onClick(this);
 		}
 
@@ -32,17 +35,18 @@ class DendogramModal extends Component {
 		}
     return(
       <div className="modal-container">
-        <Modal.Header closeButton >
+        <Modal.Header>
           <Modal.Title id="contained-modal-title">
             Dendogram
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {inst}
-          { this.state.showResults ? <DendogramInstruction /> : null }
+          {this.state.showResults ? <DendogramInstruction /> : null }
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={this.handleClick}>Submit</Button>
+          <Button onClick={()=>{this.props.onClose({showDendo: false})}}>Close</Button>
+          <Button bsStyle= "success"  onClick={this.handleClick} type="submit">Submit</Button>
         </Modal.Footer>
       </div>
     );

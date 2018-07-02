@@ -5,18 +5,22 @@ class ScatterMatrixModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      is_group: true
+      is_group: true,
+      show: false
     };
-    this.onClick = this.onClick.bind(this);
-    this.handleClick = this.handleClick.bind(this);
   }
-  onClick() {
+  handleClose = () => {
+    this.setState({ show: false });
+  }
+
+  onClick = () => {
        this.setState({ showResults: true });
   }
-  handleClick(){
-		this.props.onRequestHide();
+  handleClick = () => {
+		this.props.onClose({showScatterMatrix: false});
 		this.props.onClick(this);
 	}
+
   render()  {
     let inst = null;
     const bold_style = {'fontSize': '15', 'fontWeight': 'bold'};
@@ -29,24 +33,25 @@ class ScatterMatrixModal extends Component {
 		}
     return(
       <div className="modal-container">
-        <Modal.Header closeButton >
+        <Modal.Header >
           <Modal.Title id="contained-modal-title">
             Scatter Matrix Plot
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {inst}
-          { this.state.showResults ? <ScatterPlotInstruction /> : null }
+          { this.state.showResults ? <ScatterMatrixInstruction /> : null }
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={this.handleClick}>Submit</Button>
+          <Button onClick={()=>{this.props.onClose({showScatterMatrix: false})}}>Close</Button>
+          <Button bsStyle= "success"  onClick={this.handleClick} type="submit">Submit</Button>
         </Modal.Footer>
       </div>
     );
   }
 }
 
-class ScatterPlotInstruction extends Component{
+class ScatterMatrixInstruction extends Component{
   render()  {
     const style = {'fontFamily': 'DROID SANS MONO'};
     return(

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import AnovaModal from './components/AnovaModal';
-import MyBar from './components/MyBar';
+
+import MyBar from '../../client/components/MyBar';
 const template = <p>hiddfd</p>
 
 ReactDOM.render(<MyBar />, document.getElementById('app'));

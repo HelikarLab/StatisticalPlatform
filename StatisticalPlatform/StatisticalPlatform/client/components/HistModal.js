@@ -5,23 +5,26 @@ class HistModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      is_group: true
+      is_group: true,
+      show: false
     };
-    this.handleClick = this.handleClick.bind(this);
-    this.handleChange = this.handleChange.bind(this);
   }
 
-  handleClick() {
-		this.props.onRequestHide();
+  handleClose = () => {
+    this.setState({ show: false });
+  }
+
+  handleClick = () => {
+		this.props.onClose({showHistogram: false});
 		this.props.onClick(
-      this, this.refs.first.getValue(),
+      this,
+      this.valuefirst.value,
       null,
-      this.refs.group.getValue()
+      this.valuegroup.value
     );
 	}
 
-	handleChange() {
-
+	handleChange = () => {
 		this.setState({is_group: !this.state.is_group});
 	}
 
@@ -34,8 +37,7 @@ class HistModal extends Component {
 		});
     return(
       <div className="modal-container" style={{ height: 400 }}>
-          <Modal.Header closeButton >
-            {/* <button onClick={()=>{this.props.onClose({showLinePlot: false})}}>close</button> */}
+          <Modal.Header>
             <Modal.Title id="contained-modal-title">
               Choose Data
             </Modal.Title>
@@ -43,28 +45,25 @@ class HistModal extends Component {
           <Modal.Body>
             <form>
             <Checkbox value={this.state.is_group} onChange={this.handleChange} inputRef={ref => {this.boolgrp = ref;}} >
-      Group
-    </Checkbox>
-
-    <FormGroup controlId="formControlsSelect">
-      <ControlLabel>Variables</ControlLabel>
-      <FormControl componentClass="select" placeholder="select">
-        {options_list}
-      </FormControl>
-
-
-      <ControlLabel>Bins</ControlLabel>
-      <FormControl componentClass="select" placeholder="select" disabled={this.state.is_group}>
-        {options_list}
-      </FormControl>
-    </FormGroup>
-  </form>
+              Group
+            </Checkbox>
+            <FormGroup controlId="formControlsSelect">
+              <ControlLabel>Variables</ControlLabel>
+            <FormControl componentClass="select" placeholder="select" inputRef={ref => {this.first = ref;}}>
+                {options_list}
+              </FormControl>
+              <ControlLabel>Bins</ControlLabel>
+            <FormControl componentClass="select" placeholder="select" inputRef={ref => {this.group = ref;}} disabled={this.state.is_group}>
+                {options_list}
+              </FormControl>
+            </FormGroup>
+          </form>
           </Modal.Body>
           <Modal.Footer>
-            <Button onClick={this.handleClick}>Submit</Button>
+            <Button onClick={()=>{this.props.onClose({showHistogram: false})}}>Close</Button>
+            <Button bsStyle= "success"  onClick={this.handleClick} type="submit">Submit</Button>
           </Modal.Footer>
       </div>
-
     );
   }
 }

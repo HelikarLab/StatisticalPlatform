@@ -13,10 +13,11 @@ class DensityClusterModal extends Component {
     this.props.onRequestHide();
       this.props.onClick(
         this,
-        this.refs.first.getValue(),
-        this.refs.second.getValue(),
-        this.refs.minpts.getValue(),
-        this.refs.eps.getValue());
+        this.first.value,
+        this.second.value,
+        this.minpts.value,
+        this.eps.value
+      );
   }
 
   handleChange() {

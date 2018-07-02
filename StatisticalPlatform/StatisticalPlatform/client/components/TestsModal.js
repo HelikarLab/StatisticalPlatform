@@ -3,18 +3,24 @@ import {Button, Modal, Checkbox, FormGroup, ControlLabel, FormControl} from 'rea
 
 class TestsModal extends Component {
 
-  constructor(props){
+  constructor(props) {
     super(props);
-    this.handleClick = this.handleClick.bind(this);
+    this.state = {
+      show: false
+    };
   }
 
-  handleClick() {
-		this.props.onRequestHide();
+  handleClose = () => {
+    this.setState({ show: false });
+  }
+
+  handleClick = () => {
+    this.props.onClose({showTest: false});
 		this.props.onClick(
       this,
-      this.refs.first.getValue(),
-      this.refs.second.getValue(),
-      this.refs.fn.getValue()
+      this.first.value,
+      this.second.value,
+      this.fn.value
     );
 	}
 
@@ -27,7 +33,7 @@ class TestsModal extends Component {
 
     return(
       <div className="modal-container">
-        <Modal.Header closeButton >
+        <Modal.Header >
           <Modal.Title id="contained-modal-title">
             Choose Data
           </Modal.Title>
@@ -36,19 +42,19 @@ class TestsModal extends Component {
           <form>
             <FormGroup controlId="formControlsSelect">
               <ControlLabel>Variable -X</ControlLabel>
-            <FormControl componentClass="select" placeholder="select" ref="first">
+            <FormControl componentClass="select" placeholder="select" inputRef={ref => { this.first = ref; }}>
                 {options_list}
               </FormControl>
             </FormGroup>
             <FormGroup controlId="formControlsSelect">
               <ControlLabel>Variable- Y</ControlLabel>
-            <FormControl componentClass="select" placeholder="select" ref="second">
+            <FormControl componentClass="select" placeholder="select" inputRef={ref => { this.second = ref; }}>
                 {options_list}
               </FormControl>
             </FormGroup>
             <FormGroup controlId="formControlsSelectMultiple">
               <ControlLabel>Functions</ControlLabel>
-            <FormControl componentClass="select" ref='fn' multiple>
+            <FormControl componentClass="select" inputRef={ref => { this.fn = ref; }} multiple>
               <option value='welch'>Welch t-test</option>
               <option value='student'>Student t-test</option>
               <option value='paired'>Paired student t-test</option>
@@ -57,7 +63,8 @@ class TestsModal extends Component {
           </form>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={this.handleClick}>Submit</Button>
+          <Button onClick={()=>{this.props.onClose({showTest: false})}}>Close</Button>
+          <Button bsStyle= "success"  onClick={this.handleClick} type="submit">Submit</Button>
         </Modal.Footer>
       </div>
     );

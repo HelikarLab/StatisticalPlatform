@@ -6,27 +6,29 @@ class QQPlotModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showResults: false
+      showResults: false,
+      show: false
     };
-    this.onClick = this.onClick.bind(this);
-    this.handleClick = this.handleClick.bind(this);
   }
 
-  onClick() {
-       this.setState({ showResults: true });
-   }
+  onClick = () => {
+    this.setState({ showResults: true });
+  }
 
-  handleClick() {
-		this.props.onRequestHide();
+  handleClose = () => {
+    this.setState({ show: false });
+  }
+
+  handleClick = () => {
+    this.props.onClose({showQQ: false});
 		this.props.onClick(
       this,
-      this.refs.first.getValue(),
-      this.refs.second.getValue()
+      this.first.value,
+      this.second.value
     );
 	}
 
   render() {
-
     const options_list = [];
 		let inst = null;
     const bold_style = {'fontSize': '15', 'fontWeight': 'bold'};
@@ -44,7 +46,7 @@ class QQPlotModal extends Component {
 
     return(
       <div className="modal-container">
-        <Modal.Header closeButton >
+        <Modal.Header >
           <Modal.Title id="contained-modal-title">
             Choose Data
           </Modal.Title>
@@ -53,13 +55,13 @@ class QQPlotModal extends Component {
           <form>
             <FormGroup controlId="formControlsSelect">
               <ControlLabel>Variable - X</ControlLabel>
-            <FormControl componentClass="select" placeholder="select" ref="first">
+            <FormControl componentClass="select" placeholder="select" inputRef={ref => { this.first = ref; }}>
                 {options_list}
               </FormControl>
             </FormGroup>
             <FormGroup controlId="formControlsSelect">
               <ControlLabel>Variable - Y</ControlLabel>
-            <FormControl componentClass="select" placeholder="select" ref="second">
+            <FormControl componentClass="select" placeholder="select" inputRef={ref => { this.second = ref; }}>
                 {options_list}
               </FormControl>
             </FormGroup>
@@ -68,7 +70,8 @@ class QQPlotModal extends Component {
 					 { this.state.showResults ? <QQPlotInstruction /> : null }
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={this.handleClick}>Submit</Button>
+          <Button onClick={()=>{this.props.onClose({showQQ: false})}}>Close</Button>
+          <Button bsStyle= "success"  onClick={this.handleClick} type="submit">Submit</Button>
         </Modal.Footer>
       </div>
     );

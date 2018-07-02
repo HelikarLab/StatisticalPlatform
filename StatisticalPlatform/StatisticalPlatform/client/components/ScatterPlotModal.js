@@ -1,3 +1,18 @@
+/*
+copyright 2018 Helikar Lab
+
+Developed by Achilles Gasper Rasquinah, Tejasav Khattar, Shubham Kumar, Vinit Ravishankar and Akram Mohammed
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later
+version. This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+details. You should have received a copy of the GNU General Public License
+along with this program. If not, see <http://www.gnu.org/licenses/>
+*/
+
 import React, {Component} from 'react';
 import {Button, Modal, Checkbox, FormGroup, ControlLabel, FormControl} from 'react-bootstrap';
 
@@ -9,44 +24,44 @@ class ScatterPlotModal extends Component {
       is_exponential: false,
       is_polynomial: false,
       is_logarithmic: false,
-      showResults: false
+      showResults: false,
+      show: false
     };
-    this.onClick = this.onClick.bind(this);
-    this.handleClick = this.handleClick.bind(this);
-    this.handleChange1 = this.handleChange1.bind(this);
-    this.handleChange2 = this.handleChange2.bind(this);
-    this.handleChange3 = this.handleChange3.bind(this);
-    this.handleChange4 = this.handleChange4.bind(this);
   }
 
-  onClick() {
+  handleClose = () => {
+    this.setState({ show: false });
+  }
+
+  onClick = () => {
        this.setState({ showResults: true });
   }
 
-  handleClick() {
-    this.props.onRequestHide();
+  handleClick = () => {
+    this.props.onClose({showScatterPlot: false});
     this.props.onClick(
-      this, this.refs.first.getValue(),
-      this.refs.second.getValue(),
-      this.refs.straight.getChecked(),
-      this.refs.exponential.getChecked(),
-      this.refs.polynomial.getChecked(),
-      this.refs.logarithmic.getChecked()
+      this,
+      this.first.value,
+      this.second.value,
+      this.straight.checked,
+      this.exponential.checked,
+      this.polynomial.checked,
+      this.logarithmic.checked
     );
   }
 
-  handleChange1() {
+  handleChange1 = () => {
     this.setState({is_straigt: !this.state.is_straigt});
   }
 
-  handleChange2() {
+  handleChange2 = () => {
     this.setState({is_exponential: !this.state.is_exponential});
   }
 
-  handleChange3() {
+  handleChange3 = () => {
     this.setState({is_polynomial: !this.state.is_polynomial});
   }
-  handleChange4() {
+  handleChange4 = () => {
     this.setState({is_logarithmic: !this.state.is_logarithmic});
   }
 
@@ -68,7 +83,7 @@ class ScatterPlotModal extends Component {
 
     return(
       <div className="modal-container">
-        <Modal.Header closeButton >
+        <Modal.Header>
           <Modal.Title id="contained-modal-title">
             Choose Data
           </Modal.Title>
@@ -76,11 +91,11 @@ class ScatterPlotModal extends Component {
         <Modal.Body>
           <FormGroup controlId="formControlsSelect">
             <ControlLabel>Variable - X</ControlLabel>
-          <FormControl componentClass="select" placeholder="select" ref='first' >
+          <FormControl componentClass="select" placeholder="select" inputRef={ref => { this.first = ref; }} >
               {options_list}
             </FormControl>
             <ControlLabel>Variable - Y</ControlLabel>
-          <FormControl componentClass="select" placeholder="select" ref='second' >
+          <FormControl componentClass="select" placeholder="select" inputRef={ref => { this.second = ref; }} >
               {options_list}
             </FormControl>
           </FormGroup>
@@ -100,7 +115,8 @@ class ScatterPlotModal extends Component {
            { this.state.showResults ? <ScatterPlotInstruction /> : null }
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={this.handleClick}>Submit</Button>
+          <Button onClick={()=>{this.props.onClose({showScatterPlot: false})}}>Close</Button>
+          <Button bsStyle= "success"  onClick={this.handleClick} type="submit">Submit</Button>
         </Modal.Footer>
       </div>
     );
