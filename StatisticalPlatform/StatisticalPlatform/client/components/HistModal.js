@@ -18,9 +18,9 @@ class HistModal extends Component {
 		this.props.onClose({showHistogram: false});
 		this.props.onClick(
       this,
-      this.valuefirst.value,
+      this.first.value,
       null,
-      this.valuegroup.value
+      this.group.value
     );
 	}
 
@@ -32,7 +32,7 @@ class HistModal extends Component {
     const options_list = [];
 		const wololo="enabled";
 
-		this.props.variables.forEach( (variable) => {
+		this.props.variables.map( (variable) => {
 			options_list.push(<option value={variable}>{variable}</option>);
 		});
     return(

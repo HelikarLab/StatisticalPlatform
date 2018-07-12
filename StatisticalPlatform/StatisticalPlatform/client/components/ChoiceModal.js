@@ -36,12 +36,14 @@ class ChoiceModal extends Component {
     );
 	}
 
-  render(){
+  render()  {
     const options_list = [];
-		this.props.variables.forEach(function (variable) {
+		this.props.variables.forEach( (variable) => {
 			options_list.push(<option value={variable}>{variable}</option>);
 		});
+
 		const label = 'Variables (' + options_list.length + ')';
+
     return(
       <div className="modal-container">
         <Modal.Header>
@@ -56,8 +58,6 @@ class ChoiceModal extends Component {
             <FormControl componentClass="select" placeholder="select" inputRef={ref => { this.first = ref; }} multiple>
                 {options_list}
               </FormControl>
-            </FormGroup>
-            <FormGroup controlId="formControlsSelectMultiple">
               <ControlLabel>Functions</ControlLabel>
             <FormControl componentClass="select" inputRef={ref => { this.second = ref; }} multiple>
                 <option value='mean'>Mean</option>

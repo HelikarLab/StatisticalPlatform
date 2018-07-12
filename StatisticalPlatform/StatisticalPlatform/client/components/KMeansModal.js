@@ -21,7 +21,8 @@ class KMeansModal extends Component {
 
   handleClick = () => {
 			this.props.onClose({showKMeans: false});
-			this.props.onClick(
+      console.log(this.kvalue.value),
+      this.props.onClick(
         this,
         this.first.value,
         this.second.value,
@@ -68,7 +69,7 @@ class KMeansModal extends Component {
               </FormControl>
               <br/>
               <ControlLabel>Number of clusters (k)</ControlLabel>
-            <NumericInput min={ 0 } className="form-control" ref={this.kvalue}/>
+            <input type="number" min={ 0 } className="form-control" ref={ref => this.kvalue = ref } />
             </FormGroup>
           </form>
           {inst}

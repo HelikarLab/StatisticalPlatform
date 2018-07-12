@@ -31,7 +31,6 @@ class AnovaModal extends Component {
   handleClick = () => {
     this.props.onClose({showAnova: false});
     this.props.onClick(
-      console.log(this.vars.value,this.fn.value),
       this,
       this.vars.value,
       this.fn.value

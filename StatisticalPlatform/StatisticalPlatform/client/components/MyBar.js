@@ -29,13 +29,14 @@ class MyBar extends Component {
     super(props);
     this.state = {
     };
+
   }
   setText = (modal, text) => {
     this.refs[modal].setText(text);
   }
 
   handleClick = () => {
-		var file = ReactDOM.findDOMNode(this.refs.file);
+		let file = ReactDOM.findDOMNode(this.file)
 		file.click();
 		$(file).change( () => {
 			this.props.onClick("submit");
@@ -175,8 +176,8 @@ class MyBar extends Component {
           <Nav>
             <NavDropdown eventKey={1} title="File" id="basic-nav-dropdown">
               <MenuItem eventKey={1.1} onClick={this.handleClick}>Open</MenuItem>
-              <FileField ref="file"/>
-            <MenuItem eventKey={1.2} onClick={this.saveClick}>Export Image</MenuItem>
+            <FileField ref={ref => this.file = ref}/>
+              <MenuItem eventKey={1.2} onClick={this.saveClick}>Export Image</MenuItem>
             </NavDropdown>
 
             <NavDropdown eventKey={2} title="Data" id="basic-nav-dropdown">
@@ -194,7 +195,7 @@ class MyBar extends Component {
                   <PlotModal
                     onClose={(val) => this.closeModal(val)}
                     onClick={this.plotClick.bind(this, "lineChart")}
-                    variables={this.props.variables ? this.props.variable : ['Car','Car2', 'Car3']}  />
+                    variables={this.props.variables ? this.props.variables : ['Car','Car2', 'Car3']}  />
               </Modal>
 
               <MenuItem eventKey={3.2} onClick = {() => this.setState({showHistogram: true})}>Histogram</MenuItem>
@@ -205,7 +206,7 @@ class MyBar extends Component {
                   <HistModal
                     onClose={(val) => this.closeModal(val)}
                     onClick={this.plotClick.bind(this, "lineChart")}
-                    variables={this.props.variables ? this.props.variable : ['Car','Car2', 'Car3']}  />
+                    variables={this.props.variables && this.props.variables.length > 0 ? this.props.variables : ['Car','Car2', 'Car3']}  />
               </Modal>
 
               <MenuItem eventKey={3.3} onClick = {() => this.setState({showBarPlot: true})}>Bar Plot</MenuItem>
@@ -216,7 +217,7 @@ class MyBar extends Component {
                   <BarChartModal
                     onClose={(val) => this.closeModal(val)}
                     onClick={this.plotBarChart.bind(this, "plotBarChart")}
-                    variables={this.props.variables ? this.props.variable : ['Car','Car2', 'Car3']}  />
+                    variables={this.props.variables ? this.props.variables : ['Car','Car2', 'Car3']}  />
               </Modal>
 
               <MenuItem eventKey={3.4} onClick = {() => this.setState({showScatterPlot: true})}>Scatter Plot</MenuItem>
@@ -227,7 +228,7 @@ class MyBar extends Component {
                   <ScatterPlotModal
                     onClose={(val) => this.closeModal(val)}
                     onClick={this.plotScatterChart.bind(this, "plotScatterPlot")}
-                    variables={this.props.variables ? this.props.variable : ['Car','Car2', 'Car3']}  />
+                    variables={this.props.variables ? this.props.variables : ['Car','Car2', 'Car3']}  />
               </Modal>
 
               <MenuItem eventKey={3.5} onClick = {() => this.setState({showBoxPlot: true})}>Box Plot</MenuItem>
@@ -238,7 +239,7 @@ class MyBar extends Component {
                   <BoxPlotModal
                     onClose={(val) => this.closeModal(val)}
                     onClick={this.plotClick.bind(this, "boxChart")}
-                    variables={this.props.variables ? this.props.variable : ['Car','Car2', 'Car3']}  />
+                    variables={this.props.variables ? this.props.variables : ['Car','Car2', 'Car3']}  />
               </Modal>
 
               <MenuItem eventKey={3.6} onClick = {() => this.setState({showScatterMatrix: true})}>Scatter Matrix</MenuItem>
@@ -249,7 +250,7 @@ class MyBar extends Component {
                   <ScatterMatrixModal
                     onClose={(val) => this.closeModal(val)}
                     onClick={this.plotD3Chart.bind(this, "plotScatterMatrix")}
-                    variables={this.props.variables ? this.props.variable : ['Car','Car2', 'Car3']}  />
+                    variables={this.props.variables ? this.props.variables : ['Car','Car2', 'Car3']}  />
               </Modal>
 
               <MenuItem eventKey={3.7} onClick = {() => this.setState({showHeatMap: true})}>Heatmap</MenuItem>
@@ -260,7 +261,7 @@ class MyBar extends Component {
                   <HeatmapModal
                     onClose={(val) => this.closeModal(val)}
                     onClick={this.plotD3Chart.bind(this, "plotScatterMatrix")}
-                    variables={this.props.variables ? this.props.variable : ['Car','Car2', 'Car3']}  />
+                    variables={this.props.variables ? this.props.variables : ['Car','Car2', 'Car3']}  />
               </Modal>
             </NavDropdown>
 
@@ -274,7 +275,7 @@ class MyBar extends Component {
                   <ChoiceModal
                     onClose={(val) => this.closeModal(val)}
                     onClick={this.uniClick}
-                    variables={this.props.variables ? this.props.variable : ['Car','Car2', 'Car3']}  />
+                    variables={this.props.variables ? this.props.variables : ['Car','Car2', 'Car3']}  />
               </Modal>
 
               <MenuItem eventKey={4.2} onClick = {() => this.setState({showBiDescStats: true})}>Bivariate Descriptive Statistics</MenuItem>
@@ -285,7 +286,7 @@ class MyBar extends Component {
                   <BivariateModal
                     onClose={(val) => this.closeModal(val)}
                     onClick={this.biClick}
-                    variables={this.props.variables ? this.props.variable : ['Car','Car2', 'Car3']}  />
+                    variables={this.props.variables ? this.props.variables : ['Car','Car2', 'Car3']}  />
               </Modal>
 
               <MenuItem eventKey={4.3} onClick = {() => this.setState({showTest: true})}>T-Test</MenuItem>
@@ -296,7 +297,7 @@ class MyBar extends Component {
                   <TestsModal
                     onClose={(val) => this.closeModal(val)}
                     onClick={this.testClick}
-                    variables={this.props.variables ? this.props.variable : ['Car','Car2', 'Car3']}  />
+                    variables={this.props.variables ? this.props.variables : ['Car','Car2', 'Car3']}  />
               </Modal>
 
               <MenuItem eventKey={4.4} onClick = {() => this.setState({showAnova: true})}>Anova</MenuItem>
@@ -307,7 +308,7 @@ class MyBar extends Component {
                   <AnovaModal
                     onClose={(val) => this.closeModal(val)}
                     onClick={this.anovaClick}
-                    variables={this.props.variables ? this.props.variable : ['Car','Car2', 'Car3']}  />
+                    variables={this.props.variables ? this.props.variables : ['Car','Car2', 'Car3']}  />
               </Modal>
 
               <MenuItem eventKey={4.5} onClick = {() => this.setState({showQQ: true})}>QQPlot</MenuItem>
@@ -318,7 +319,7 @@ class MyBar extends Component {
                   <QQPlotModal
                     onClose={(val) => this.closeModal(val)}
                     onClick={this.plotQQChart.bind(this, "plotQQ")}
-                    variables={this.props.variables ? this.props.variable : ['Car','Car2', 'Car3']}  />
+                    variables={this.props.variables ? this.props.variables : ['Car','Car2', 'Car3']}  />
               </Modal>
 
               <MenuItem eventKey={4.6} onClick = {() => this.setState({showComatrix: true})}>Correlation & Covariance</MenuItem>
@@ -329,7 +330,7 @@ class MyBar extends Component {
                   <ComatrixModal
                     onClose={(val) => this.closeModal(val)}
                     onClick={this.plotComatrixChart.bind(this, "plotComatrix")}
-                    variables={this.props.variables ? this.props.variable : ['Car','Car2', 'Car3']}  />
+                    variables={this.props.variables ? this.props.variables : ['Car','Car2', 'Car3']}  />
               </Modal>
 
               <MenuItem eventKey={4.7} onClick = {() => this.setState({showLinePlot: true})}>Linear Regression</MenuItem>
@@ -340,7 +341,7 @@ class MyBar extends Component {
                   <PlotModal
                     onClose={(val) => this.closeModal(val)}
                     onClick={this.plotClick.bind(this, "regression")}
-                    variables={this.props.variables ? this.props.variable : ['Car','Car2', 'Car3']}  />
+                    variables={this.props.variables ? this.props.variables : ['Car','Car2', 'Car3']}  />
               </Modal>
 
               <MenuItem eventKey={4.8} onClick = {() => this.setState({showTimeSeries: true})}>Time Series Analysis </MenuItem>
@@ -351,7 +352,7 @@ class MyBar extends Component {
                   <TimeSeriesModal
                     onClose={(val) => this.closeModal(val)}
                     onClick={this.plotD3Chart.bind(this, "plotTimeSeries")}
-                    variables={this.props.variables ? this.props.variable : ['Car','Car2', 'Car3']}  />
+                    variables={this.props.variables ? this.props.variables : ['Car','Car2', 'Car3']}  />
               </Modal>
 
             </NavDropdown>
@@ -365,7 +366,7 @@ class MyBar extends Component {
                   <KMeansModal
                     onClose={(val) => this.closeModal(val)}
                     onClick={this.plotKMeansChart.bind(this, "plotKMeans")}
-                    variables={this.props.variables ? this.props.variable : ['Car','Car2', 'Car3']}  />
+                    variables={this.props.variables ? this.props.variables : ['Car','Car2', 'Car3']}  />
               </Modal>
               <MenuItem eventKey={5.2} onClick = {() => this.setState({showDendo: true})}>Cluster Dendrogram</MenuItem>
               <Modal
@@ -375,7 +376,7 @@ class MyBar extends Component {
                   <DendogramModal
                     onClose={(val) => this.closeModal(val)}
                     onClick={this.plotD3Chart.bind(this, "plotDendogram")}
-                    variables={this.props.variables ? this.props.variable : ['Car','Car2', 'Car3']}  />
+                    variables={this.props.variables ? this.props.variables : ['Car','Car2', 'Car3']}  />
               </Modal>
             </NavDropdown>
 
@@ -389,7 +390,7 @@ class MyBar extends Component {
                     onClose={(val) => this.closeModal(val)}
                     ref="naiveBayes_modal"
                     onClick={this.classifyClick}
-                    variables={this.props.variables ? this.props.variable : ['Car','Car2', 'Car3']}  />
+                    variables={this.props.variables ? this.props.variables : ['Car','Car2', 'Car3']}  />
               </Modal>
 
               <MenuItem eventKey={6.2} onClick = {() => this.setState({showSVM: true})}>SVM</MenuItem>
@@ -401,7 +402,7 @@ class MyBar extends Component {
                     onClose={(val) => this.closeModal(val)}
                     ref="svm_modal"
                     onClick={this.SVMClick}
-                    variables={this.props.variables ? this.props.variable : ['Car','Car2', 'Car3']}  />
+                    variables={this.props.variables ? this.props.variables : ['Car','Car2', 'Car3']}  />
               </Modal>
 
             </NavDropdown>
@@ -416,7 +417,7 @@ class MyBar extends Component {
                   <DashboardModal
                     onClose={(val) => this.closeModal(val)}
                     onClick={this.dashboardClick.bind(this, "initDashboard")}
-                    variables={this.props.variables ? this.props.variable : ['Car','Car2', 'Car3']}  />
+                    variables={this.props.variables ? this.props.variables : ['Car','Car2', 'Car3']}  />
               </Modal>
             </NavItem>
           </Nav>
