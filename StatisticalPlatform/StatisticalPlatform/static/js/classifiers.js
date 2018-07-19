@@ -39,7 +39,7 @@ function naiveBayesClassify(bundle, table) {
 			console.log(JSON.stringify(train_x));
 			console.log(JSON.stringify(train_y));
 			*/
-			ocpu.seturl("//public.opencpu.org/ocpu/github/HelikarLab/StatisticalPlatform/R");
+			ocpu.seturl("//cloud.opencpu.org/ocpu/apps/tejasavkhattar/test/R");
 
 			ocpu.call("classify", {
 				fn: bundle.classify_type,
@@ -98,7 +98,7 @@ function evaluate(bundle, bar_ref) {
 	console.log(JSON.stringify(test_y));
 	*/
 
-	ocpu.seturl("//public.opencpu.org/ocpu/github/HelikarLab/StatisticalPlatform/R");
+	ocpu.seturl("//cloud.opencpu.org/ocpu/apps/tejasavkhattar/test/R");
 
 	ocpu.call("myfn", {
 		fn: bundle.classify_type,

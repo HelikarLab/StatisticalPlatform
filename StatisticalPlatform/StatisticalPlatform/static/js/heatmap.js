@@ -9,12 +9,14 @@ details. You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>
 */
 
+
+console.log("heatmap says hi");
 var classesNumber = 10,
     cellSize = 16;
 
 //#########################################################
 function plotHeatmap(data) {
-
+    console.log("heatmap says hi1");
     var heatmapId = '#plot-panel';
     var paletteName = 'RdBu';
 

@@ -17,7 +17,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>
  *	Contains all the plot functions
  *	MASSIVE TODO: reorganise the variables into SOME consistent system
  */
-function makePlot(obj, props) {
+function makePlot(obj, state) {
 
 	d3.selectAll("svg > *").remove();
 
@@ -26,20 +26,20 @@ function makePlot(obj, props) {
 
 	// plot
 	if(obj) {
-		var hot = obj.props.data_table;
-		var type = obj.props.plot_type;
-		var props = obj.props;
-		var dataJSON = JSON.stringify(hot.getData());
+		var hot = obj.state.data_table;
+		var type = obj.state.plot_type;
+		var state = obj.state;
+		var dataJSON = JSON.stringify(hot.getSourceData());
 		var reg = type === "regression";
 	}
 	else {
-		var dataJSON = JSON.stringify(props.data);
-		var type = props.type;
+		var dataJSON = JSON.stringify(state.data);
+		var type = state.type;
 	}
 
 	if (type === "urlData") {
 		$.ajax({
-			url: props.url,
+			url: state.url,
 			type: 'GET',
 			dataType: "json",
 			success: getUrlData
@@ -66,14 +66,14 @@ function makePlot(obj, props) {
 			var slope, intercept;
 
 			var req = ocpu.call("lm", {
-				formula: new ocpu.Snippet(props.var_y + " ~ " + props.var_x),
+				formula: new ocpu.Snippet(state.var_y + " ~ " + state.var_x),
 				data: new ocpu.Snippet("jsonlite::fromJSON('" + dataJSON + "')")
 			}, function (session) {
 				session.getObject(null, {force: true}, function (obj) {
 					intercept = obj.coefficients[0];
 					slope = obj.coefficients[1];
 					var plotData = {};
-					plotData.dataJSON = dataJSON, plotData.type = type, plotData.var_x = props.var_x, plotData.var_y = props.var_y, plotData.var_g = props.var_g, plotData.x_name = props.x_name, plotData.y_name = props.y_name, plotData.slope = slope, plotData.intercept = intercept;
+					plotData.dataJSON = dataJSON, plotData.type = type, plotData.var_x = state.var_x, plotData.var_y = state.var_y, plotData.var_g = state.var_g, plotData.x_name = state.x_name, plotData.y_name = state.y_name, plotData.slope = slope, plotData.intercept = intercept;
 					addNewPlot('Linear Regression', plotData);
 					plotStandard(plotData);
 				});
@@ -81,7 +81,7 @@ function makePlot(obj, props) {
 		}
 		else {
 			var plotData = {};
-			plotData.dataJSON = dataJSON, plotData.type = type, plotData.var_x = props.var_x, plotData.var_y = props.var_y, plotData.var_g = props.var_g, plotData.x_name = props.x_name, plotData.y_name = props.y_name;
+			plotData.dataJSON = dataJSON, plotData.type = type, plotData.var_x = state.var_x, plotData.var_y = state.var_y, plotData.var_g = state.var_g, plotData.x_name = state.x_name, plotData.y_name = state.y_name;
 			addNewPlot('Line Plot', plotData);
 			plotStandard(plotData);
 		}
@@ -89,7 +89,7 @@ function makePlot(obj, props) {
 
 	if (type === "plotDendogram") {
 
-		ocpu.seturl("//public.opencpu.org/ocpu/github/HelikarLab/StatisticalPlatform/R");
+		ocpu.seturl("//cloud.opencpu.org/ocpu/apps/tejasavkhattar/test/R");
 
 		var data = dataJSON;
 
@@ -107,16 +107,16 @@ function makePlot(obj, props) {
 
 	if (type === "plotKMeans") {
 
-		var var_x = props.var_x, var_y = props.var_y, kvalue = props.kvalue;
+		var var_x = state.var_x, var_y = state.var_y, kvalue = state.kvalue;
 
-		ocpu.seturl("//public.opencpu.org/ocpu/github/HelikarLab/StatisticalPlatform/R");
+		ocpu.seturl("//cloud.opencpu.org/ocpu/apps/tejasavkhattar/test/R");
 
 		var data = dataJSON, plotData = {};
 		plotData.kvalue = kvalue;
 		plotData.var_x = var_x;
 		plotData.var_y = var_y;
 
-		var req = ocpu.rpc("kmeansCluster", {data: data, var_x: var_x, var_y: var_y, kvalue: kvalue}, function(output){
+		var req =ocpu.rpc("kmeansCluster", {data: data, var_x: var_x, var_y: var_y, kvalue: kvalue}, function(output){
 				var kmeansData = output.message;
 				plotData.kmeansData = kmeansData;
 				addNewPlot('K-Means Clustering', plotData);
@@ -131,7 +131,7 @@ function makePlot(obj, props) {
 
 	if (type === "plotScatterMatrix") {
 
-		ocpu.seturl("//public.opencpu.org/ocpu/github/HelikarLab/StatisticalPlatform/R");
+		ocpu.seturl("//cloud.opencpu.org/ocpu/apps/tejasavkhattar/test/R");
 
 		var data = dataJSON;
 
@@ -149,9 +149,9 @@ function makePlot(obj, props) {
 
 	if (type === "plotQQ") {
 
-	var var_x = props.var_x, var_y = props.var_y;
+	var var_x = state.var_x, var_y = state.var_y;
 
-		ocpu.seturl("//public.opencpu.org/ocpu/github/HelikarLab/StatisticalPlatform/R");
+		ocpu.seturl("//cloud.opencpu.org/ocpu/apps/tejasavkhattar/test/R");
 
 		var data = dataJSON, plotData = {};
 		plotData.var_x = var_x;
@@ -172,7 +172,7 @@ function makePlot(obj, props) {
 
 	if (type === "plotTimeSeries") {
 
-		ocpu.seturl("//public.opencpu.org/ocpu/github/HelikarLab/StatisticalPlatform/R");
+		ocpu.seturl("//cloud.opencpu.org/ocpu/apps/tejasavkhattar/test/R");
 
 		var data = dataJSON, plotData = {};
 
@@ -191,9 +191,9 @@ function makePlot(obj, props) {
 
 	if (type === "plotComatrix") {
 
-		ocpu.seturl("//public.opencpu.org/ocpu/github/HelikarLab/StatisticalPlatform/R");
+		ocpu.seturl("//cloud.opencpu.org/ocpu/apps/tejasavkhattar/test/R");
 
-		var method = props.comatrix;
+		var method = state.comatrix;
 		var data = dataJSON;
 
 		var req = ocpu.rpc("comatrix",
@@ -219,10 +219,10 @@ function makePlot(obj, props) {
 
 	if (type == "plotBarChart") {
 
-		if (props.simple_bool) {
-			ocpu.seturl("//public.opencpu.org/ocpu/github/HelikarLab/StatisticalPlatform/R");
+		if (state.simple_bool) {
+			ocpu.seturl("//cloud.opencpu.org/ocpu/apps/tejasavkhattar/test/R");
 
-			var data = dataJSON, value = props.var_x, plotData = {};
+			var data = dataJSON, value = state.var_x, plotData = {};
 
 			var req = ocpu.rpc("simpleBar", {data: data, value: value}, function(output){
 					var simpleBarPlotData = output.message;
@@ -236,9 +236,9 @@ function makePlot(obj, props) {
 					alert("Server error: " + req.responseText);
 				});
 		}
-		if (props.group_bool) {
+		if (state.group_bool) {
 
-			ocpu.seturl("//public.opencpu.org/ocpu/github/HelikarLab/StatisticalPlatform/R");
+			ocpu.seturl("//cloud.opencpu.org/ocpu/apps/tejasavkhattar/test/R");
 
 			var data = dataJSON;
 
@@ -253,9 +253,9 @@ function makePlot(obj, props) {
 					alert("Server error: " + req.responseText);
 				});
 		}
-		if (props.stack_bool) {
+		if (state.stack_bool) {
 
-			ocpu.seturl("//public.opencpu.org/ocpu/github/HelikarLab/StatisticalPlatform/R");
+			ocpu.seturl("//cloud.opencpu.org/ocpu/apps/tejasavkhattar/test/R");
 
 			var data = dataJSON;
 
@@ -273,8 +273,8 @@ function makePlot(obj, props) {
 	}
 
 	if (type == "plotScatterPlot") {
-		var var_x = props.var_x, var_y = props.var_y, straight_bool = props.straight_bool, exponential_bool = props.exponential_bool, polynomial_bool = props.polynomial_bool, logarithmic_bool = props.logarithmic_bool;
-		ocpu.seturl("//public.opencpu.org/ocpu/github/HelikarLab/StatisticalPlatform/R");
+		var var_x = state.var_x, var_y = state.var_y, straight_bool = state.straight_bool, exponential_bool = state.exponential_bool, polynomial_bool = state.polynomial_bool, logarithmic_bool = state.logarithmic_bool;
+		ocpu.seturl("//cloud.opencpu.org/ocpu/apps/tejasavkhattar/test/R");
 		var data = dataJSON, plotData = {};
 
 		var req = ocpu.rpc("scatterplot", {data: data, var_x: var_x, var_y: var_y}, function(output){
@@ -300,7 +300,7 @@ function makePlot(obj, props) {
 	}
 
 	if (type == "plotHeatmap") {
-		ocpu.seturl("//public.opencpu.org/ocpu/github/HelikarLab/StatisticalPlatform/R");
+		ocpu.seturl("//cloud.opencpu.org/ocpu/apps/tejasavkhattar/test/R");
 
 		var data = dataJSON, plotData = {};
 
@@ -317,20 +317,20 @@ function makePlot(obj, props) {
 	}
 
 	if(type === "discreteBarChart")
-		plotBar(dataJSON, type, props.var_x, props.var_y);
+		plotBar(dataJSON, type, state.var_x, state.var_y);
 
 	if(type === "histogram"){
 
 		var plotData = {};
 		plotData.dataJSON = dataJSON;
-		plotData.var_x = props.var_x;
-		plotData.var_g = props.var_g;
+		plotData.var_x = state.var_x;
+		plotData.var_g = state.var_g;
 		addNewPlot('Histogram', plotData);
 		plotHist(plotData);
 	}
 
 	if(type === "boxChart")
-		plotBox(dataJSON, type, props.var_g, props.var_x, props.x_name, props.y_name);
+		plotBox(dataJSON, type, state.var_g, state.var_x, state.x_name, state.y_name);
 }
 
 function plotBar(array, type, var_x, var_y) {

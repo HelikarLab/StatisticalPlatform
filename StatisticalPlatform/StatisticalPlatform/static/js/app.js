@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import AppRouter from '../../client/routers/AppRouter'
 
-import MyBar from '../../client/components/MyBar';
 const template = <p>hiddfd</p>
 
-ReactDOM.render(<MyBar />, document.getElementById('app'));
+ReactDOM.render(<AppRouter/>, document.getElementById('app'));

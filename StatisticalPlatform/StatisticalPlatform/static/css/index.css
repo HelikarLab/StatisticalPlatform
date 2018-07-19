@@ -54,13 +54,6 @@ iframe {
 	overflow: hidden;
 }
 
-.modal-container {
-  position: relative;
-}
-.modal-container .modal, .modal-container .modal-backdrop {
-  position: absolute;
-}
-
 /*#invisible-file {
 	display: none;
 }*/

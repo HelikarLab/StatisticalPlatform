@@ -2,9 +2,12 @@ import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import Handsontable from 'handsontable';
 import $ from 'jquery';
-import MyBar from './MyBar';
+import MyBar from './NavBar/MyBar';
 import HTable from './HTable';
 import Papa from 'papaparse';
+import * as d3 from "d3";
+
+
 
 class WholeThing extends Component {
 
@@ -23,17 +26,100 @@ class WholeThing extends Component {
       test_table: null,
       anova_table: null,
       classify_table: null,
-
+      data_table: null,
+      plot: false,
+      showTable: false,
+      multi: true,
+      plot_count: 4,
     };
     this.handleClick = this.handleClick.bind(this);
   }
 
-    setProps = obj => {
-      const newProps = {...this.props ,...obj };
-      this.props = newProps;
-      this.forceUpdate();
+  getIndex = (table, str) => {
+    var headers = table.getColHeader();
+    for(var i = 0; i < headers.length; i++) {
+      if(headers[i].indexOf(str) > -1) {
+        return i;
+      }
     }
+  }
 
+  getSanitizedData = (table, column) => {
+      var preColArr = table.getDataAtCol(column).map( (elem) => {
+          return parseInt(elem);
+      });
+
+      preColArr = preColArr.filter(  (elem) => {
+          return !isNaN(elem);
+      });
+
+      return preColArr;
+  }
+
+  Column = (preCol) => {
+
+      var i;
+
+      this.preCol = preCol;
+      this.sortedCol = preCol;
+      this.sortedCol.sort();
+      this.mean = this.preCol.reduce( (a, b) => { return a + b; }, 0) / this.preCol.length;
+      this.median = 0;	// init
+
+      var length = this.preCol.length - 1;
+      if(length % 2 === 0) {
+        this.median = this.sortedCol[length / 2];
+      }
+      else {
+        var low = this.sortedCol[(length - 1) / 2];
+        var high = this.sortedCol[(length + 1) / 2];
+        this.median = (low + high) / 2;
+      }
+
+      this.getCentralMoment = (n) => {
+        var sum = 0;
+        for (i = 0; i < this.preCol.length; i++) {
+          var temp = Math.pow(this.preCol[i] - this.mean, n);
+            sum += temp;
+          }
+          return sum / (this.preCol.length - 1);
+      }
+
+      this.subtractMean = () => {
+          var sum = [];
+          this.preCol.forEach( call.bind(this));
+          return sum;
+      }
+
+      this.variance = this.getCentralMoment(2);
+      this.sd = Math.sqrt(this.variance);
+
+
+      this.skewness = this.getCentralMoment(3) / Math.pow(this.sd, 3);
+      this.kurtosis = this.getCentralMoment(4) / Math.pow(this.sd, 4);
+
+      // apply function by name
+      this.applyFunction = (functionName) => {
+          return this[functionName]();
+      };
+
+      this.getProperty = (functionName) => {
+        return this[functionName];
+      }
+
+      this.getLength = () => {
+        return this.preCol.length;
+      }
+
+      // Feature scaling
+      this.fscale =  () => {
+          var min = Math.min.apply(null, this.preCol);
+          var max = Math.max.apply(null, this.preCol);
+          return this.preCol.map(  (elem) => {
+              return (elem - min) / (max - min);
+          });
+      };
+  }
 
   componentDidMount () {
 
@@ -52,7 +138,7 @@ class WholeThing extends Component {
 	        height: 500
     	});
 
-		this.setState({data_table: table});
+		this.setState({data_table: table}, console.log("hey" + this.state.data_table) );
 		this.data_ref.displayOff();
 
     // Univariate table
@@ -66,7 +152,7 @@ class WholeThing extends Component {
 			manualColumnResize: true,
 		});
 
-		this.setState({uni_table: table});
+		this.setState({uni_table: table}, console.log("hey1" + this.state.data_table));
 		this.uni_ref.displayOff();
 
 		// Bivariate table
@@ -177,10 +263,12 @@ class WholeThing extends Component {
 		      "check.names": new ocpu.Snippet("FALSE")
 		  }, firstCallback.bind(this))
 }
+
+
     // Plot graph
-    if(this.props.plot) {
+    if(this.state.plot) {
     	makePlot(this);
-      this.setProps({plot: false});
+      this.setState({plot: false});
     }
 
     if(this.state.cluster) {
@@ -215,7 +303,7 @@ class WholeThing extends Component {
 handleClick (buttonType, functionName, propertyName, plotType) {
   // map function names to actual names
  const {data_table} = this.state;
- console.log(data_table)
+ console.log("in handle click",data_table)
   const fn_names = {
     "mean": "Mean",
     "median": "Median",
@@ -239,8 +327,8 @@ handleClick (buttonType, functionName, propertyName, plotType) {
     case "url":
       let plot_type = arguments[1];
       const url = arguments[2];
-      this.setProps({multi: false, plot: true});
-      this.setProps({plot_type: plot_type, url: url});
+      this.setState({multi: false, plot: true});
+      this.setState({plot_type: plot_type, url: url});
 
       $.ajax({
         url: url,
@@ -266,7 +354,7 @@ handleClick (buttonType, functionName, propertyName, plotType) {
         break;
 
       case "export-table":
-        table = data_table;
+        table = this.state.data_table;
         dataJSON = JSON.stringify(table.getData());
         const dataCSV = Papa.unparse(dataJSON);
         const csvString = dataCSV;
@@ -297,24 +385,24 @@ handleClick (buttonType, functionName, propertyName, plotType) {
       let var_x = arguments[3];
       let var_y = arguments[4];
       const kvalue = arguments[5];
-      this.setProps({multi: false, plot: true});
-      this.setProps({plot_type: plot_type, var_x: var_x, var_y: var_y, kvalue: kvalue});
+      this.setState({multi: false, plot: true});
+      this.setState({plot_type: plot_type, var_x: var_x, var_y: var_y, kvalue: kvalue});
       break;
 
     case "qq":
       plot_type = arguments[1];
       var_x = arguments[3];
       var_y = arguments[4];
-      this.setProps({multi: false, plot: true});
-      this.setProps({plot_type: plot_type, var_x: var_x, var_y: var_y});
+      this.setState({multi: false, plot: true});
+      this.setState({plot_type: plot_type, var_x: var_x, var_y: var_y});
       break;
 
     /*choose correlation or covariance matrix*/
     case "comatrix":
       constplot_type = arguments[1];
       const comatrix = arguments[2];
-      this.setProps({multi: false, plot: true});
-      this.setProps({plot_type: plot_type, comatrix: comatrix});
+      this.setState({multi: false, plot: true});
+      this.setState({plot_type: plot_type, comatrix: comatrix});
       break;
 
     case "barChart":
@@ -323,8 +411,8 @@ handleClick (buttonType, functionName, propertyName, plotType) {
       const group_bool = arguments[3];
       const stack_bool = arguments[4];
       var_x = arguments[5];
-      this.setProps({multi: false, plot: true});
-      this.setProps({plot_type: plot_type, simple_bool: simple_bool, group_bool: group_bool, stack_bool: stack_bool, var_x: var_x});
+      this.setState({multi: false, plot: true});
+      this.setState({plot_type: plot_type, simple_bool: simple_bool, group_bool: group_bool, stack_bool: stack_bool, var_x: var_x});
       break;
 
     case "scatterPlot":
@@ -335,16 +423,16 @@ handleClick (buttonType, functionName, propertyName, plotType) {
       const exponential_bool = arguments[5];
       const polynomial_bool = arguments[6];
       const logarithmic_bool = arguments[7];
-      this.setProps({multi: false, plot: true});
-      this.setProps({plot_type: plot_type, var_x: var_x, var_y: var_y, straight_bool: straight_bool, exponential_bool: exponential_bool, polynomial_bool, polynomial_bool, logarithmic_bool: logarithmic_bool});
+      this.setState({multi: false, plot: true});
+      this.setState({plot_type: plot_type, var_x: var_x, var_y: var_y, straight_bool: straight_bool, exponential_bool: exponential_bool, polynomial_bool, polynomial_bool, logarithmic_bool: logarithmic_bool});
       break;
 
     case "regressionPlot":
       plot_type = arguments[1];
       var_x = arguments[3];
       const vars = arguments[4];
-      this.setProps({multi: false, plot: true});
-      this.setProps({plot_type: plot_type, var_x: var_x, vars: vars});
+      this.setState({multi: false, plot: true});
+      this.setState({plot_type: plot_type, var_x: var_x, vars: vars});
       break;
 
     /*
@@ -352,11 +440,13 @@ handleClick (buttonType, functionName, propertyName, plotType) {
      */
 
     case "stats":
-      table = data_table;
+      let table = this.state.data_table;
       const uni_table = this.state.uni_table;
 
-      const variables = arguments[1];
-      let functions = arguments[2];
+      const variable = arguments[1];
+      const variables = [variable];
+      let functions1 = arguments[2];
+      let functions =[functions1]
 
       let table_data = [];
       variables.unshift("Function");
@@ -366,7 +456,7 @@ handleClick (buttonType, functionName, propertyName, plotType) {
 
       let columns = [];
       variables.map( (vars) => {
-        columns.push(getIndex(table, vars));
+        columns.push(this.getIndex(table, vars));
       });
 
       columns = columns.filter( (elem) => {
@@ -382,12 +472,13 @@ handleClick (buttonType, functionName, propertyName, plotType) {
         row.push(fn);
         columns.map( (column, c_ind) => {
 
-          let preColArr = getSanitizedData(table, column);
+          let preColArr = this.getSanitizedData(table, column);
 
-              console.log(preColArr);
+              console.log("hi this is precol" + preColArr);
 
-              preColArr = new Column(preColArr);
-              const out = preColArr.getProperty(fn);
+              preColArr = [preColArr];
+              console.log("hi this is precol new " + preColArr);
+              const out = this[fn];
               uni_table.setDataAtCell(f_ind, c_ind + 1, out);
         });
         table_data.push(row);
@@ -409,8 +500,8 @@ handleClick (buttonType, functionName, propertyName, plotType) {
       let label_1 = arguments[1];
       let label_2 = arguments[2];
       functions = arguments[3];
-      let col_1 = getSanitizedData(table, getIndex(table, label_1));
-      let col_2 = getSanitizedData(table, getIndex(table, label_2));
+      let col_1 = this.getSanitizedData(table, this.getIndex(table, label_1));
+      let col_2 = this.getSanitizedData(table, this.getIndex(table, label_2));
 
       this.bi_ref.setHeaders(["Function", label_2 + " ~ " + label_1]);
       this.bi_ref.displayOn();
@@ -449,15 +540,17 @@ handleClick (buttonType, functionName, propertyName, plotType) {
 
     case "tests":
       table = this.state.data_table;
-      const test_table = this.state.test_table;
+      let test_table = this.state.test_table;
 
       let data = [];
 
       label_1 = arguments[1];
       label_2 = arguments[2];
-      functions = arguments[3];
-      col_1 = getSanitizedData(table, getIndex(table, label_1));
-      col_2 = getSanitizedData(table, getIndex(table, label_2));
+      functions1 = arguments[3];
+
+      functions =[functions1]
+      col_1 = this.getSanitizedData(table, this.getIndex(table, label_1));
+      col_2 = this.getSanitizedData(table, this.getIndex(table, label_2));
 
       this.test_ref.setHeaders(["Test", label_2 + " ~ " + label_1]);
       this.test_ref.displayOn();
@@ -483,7 +576,7 @@ handleClick (buttonType, functionName, propertyName, plotType) {
           "var.equal": student
         }, (session) => {
           session.getObject(null, {force: true}, (out) => {
-            d = "t: " + out.statistic[0] + "\np-value: " + out["p.value"][0];
+            let d = "t: " + out.statistic[0] + "\np-value: " + out["p.value"][0];
             test_table.spliceRow(n, 0, 0, out["method"][0], d);
           });
         });
@@ -589,21 +682,23 @@ handleClick (buttonType, functionName, propertyName, plotType) {
       const var_g = arguments[4];
       const x_name = arguments[5];
       const y_name = arguments[6];
-      this.setProps({multi: false, plot: true});
-      this.setProps({plot_type: plot_type, var_x: var_x, var_y: var_y, var_g: var_g, reg: false, x_name: x_name, y_name: y_name});
+      this.setState({multi: false, plot: true});
+      this.setState({plot_type: plot_type, var_x: var_x, var_y: var_y, var_g: var_g, reg: false, x_name: x_name, y_name: y_name});
   }
 
 }
 
 
+
+
   render() {
     console.log("***********Data State****************");
     console.table(this.state.data);
-    if(!this.props.multi)
-			var thing = <svg id="plot-panel" ref="plot_ref"></svg>;
+    if(!this.state.multi)
+			var thing = <svg id="plot-panel" ref={ref => this.plot_ref = ref}></svg>;
 		else {
 			var thing = [];
-			for(var i = 0; i < this.props.plot_count; i++) {
+			for(var i = 0; i < this.state.plot_count; i++) {
         let k = i
         thing.push(<div id={"box_" + k}></div>);
       }
@@ -611,16 +706,16 @@ handleClick (buttonType, functionName, propertyName, plotType) {
     return (
 
       <div>
-				<MyBar ref={ref => this.top_bar = ref} onClick={this.handleClick} variables={this.state.variables} plotenabled={this.props.plot_type} />
+				<MyBar ref={ref => this.top_bar = ref} onClick={this.handleClick} variables={this.state.variables} plotenabled={this.state.plot_type} />
 	        	<div>
               {thing}
 	        		<div id="temp_plot_thing"></div>
+              <HTable  ref={ref => this.data_ref = ref} table={this.state.data_table} table_id={1} />
 		        	<HTable  ref={ref => this.uni_ref = ref} table={this.state.uni_table} table_id={2} />
 		        	<HTable  ref={ref => this.bi_ref = ref} table={this.state.bi_table} table_id={3} />
 		        	<HTable  ref={ref => this.test_ref = ref} table={this.state.test_table} table_id={4} />
 		        	<HTable  ref={ref => this.anova_ref = ref} table={this.state.anova_table} table_id={5} />
 		       		<HTable ref={ref => this.classify_ref = ref} table={this.state.classify_table} table_id={6} />
-              <HTable  ref={ref => this.data_ref = ref} table={this.state.data_table} table_id={1} />
 	        	</div>
 	        </div>
           );
@@ -628,14 +723,6 @@ handleClick (buttonType, functionName, propertyName, plotType) {
 
 }
 
-WholeThing.defaultProps = {
-  data_table: null,
-  plot: false,
-  showTable: false,
-  multi: true,
-  plot_count: 4,
-  plot_type: "",
-};
 
 
 export default WholeThing;

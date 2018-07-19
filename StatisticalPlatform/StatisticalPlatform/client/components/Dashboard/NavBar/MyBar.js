@@ -1,26 +1,26 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
-import AnovaModal from './AnovaModal';
-import PlotModal from './PlotModal';
-import HistModal from './HistModal';
-import BarChartModal from './BarChartModal';
-import ScatterPlotModal from './ScatterPlotModal';
-import BoxPlotModal from './BoxPlotModal';
-import ScatterMatrixModal from './ScatterMatrixModal';
-import HeatmapModal from './HeatmapModal';
-import ChoiceModal from './ChoiceModal';
-import BivariateModal from './BivariateModal';
-import TestsModal from './TestsModal';
-import QQPlotModal from './QQPlotModal';
-import ComatrixModal from './ComatrixModal'
-import TimeSeriesModal from './TimeSeriesModal';
-import KMeansModal from './KMeansModal';
-import DendogramModal from './DendogramModal';
-import ClassifyModal from './ClassifyModal';
-import DashboardModal from './DashboardModal';
-import FileField from './FileField';
-import SVMModal from './SVMModal';
+import AnovaModal from './Analyze/AnovaModal';
+import PlotModal from './Plot/PlotModal';
+import HistModal from './Plot/HistModal';
+import BarChartModal from './Plot/BarChartModal';
+import ScatterPlotModal from './Plot/ScatterPlotModal';
+import BoxPlotModal from './Plot/BoxPlotModal';
+import ScatterMatrixModal from './Plot/ScatterMatrixModal';
+import HeatmapModal from './Plot/HeatmapModal';
+import ChoiceModal from './Analyze/ChoiceModal';
+import BivariateModal from './Analyze/BivariateModal';
+import TestsModal from './Analyze/TestsModal';
+import QQPlotModal from './Analyze/QQPlotModal';
+import ComatrixModal from './Analyze/ComatrixModal'
+import TimeSeriesModal from './Analyze/TimeSeriesModal';
+import KMeansModal from './Clustering/KMeansModal';
+import DendogramModal from './Clustering/DendogramModal';
+import ClassifyModal from './Classification/ClassifyModal';
+import DashboardModal from './Dashboard/DashboardModal';
+import FileField from './File/FileField';
+import SVMModal from './Classification/SVMModal';
 import {Navbar, Nav, DropdownButton, MenuItem, Modal, NavItem, NavDropdown, } from 'react-bootstrap';
 
 class MyBar extends Component {
@@ -419,6 +419,10 @@ class MyBar extends Component {
                     onClick={this.dashboardClick.bind(this, "initDashboard")}
                     variables={this.props.variables ? this.props.variables : ['Car','Car2', 'Car3']}  />
               </Modal>
+            </NavItem>
+
+            <NavItem eventKey={1} href="#">
+              <MenuItem eventKey={1.1}  onClick = {() => this.setState({showDash: true})}>LogOut</MenuItem>
             </NavItem>
           </Nav>
         </Navbar.Collapse>

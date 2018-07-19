@@ -16,11 +16,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from . import views
+from django.conf.urls import url
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('users/', views.UserListView.as_view()),
     path('api/rest-auth/', include('rest_auth.urls')),
     path('api/rest-auth/registration/', include('rest_auth.registration.urls')),
-    path('index/',views.account)
+    path('',views.account)
+]
+
+urlpatterns += [
+    url(r'^.*/', views.account)
 ]

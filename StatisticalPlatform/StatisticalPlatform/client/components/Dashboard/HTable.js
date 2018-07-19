@@ -2,6 +2,17 @@ import React, {Component} from 'react';
 import Handsontable from 'handsontable';
 import ReactDOM from 'react-dom';
 
+const sortByKey = (array, key, asc) => {
+  return array.sort( (a, b) => {
+    const x = a[key];
+    const y = b[key];
+    if(asc)
+      return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+    else
+      return ((x > y) ? -1 : ((x < y) ? 1 : 0));
+  });
+}
+
 class HTable extends Component {
   constructor(props) {
     super(props);
@@ -10,18 +21,15 @@ class HTable extends Component {
     };
   }
 
-  setProps = obj => {
-    const newProps = {...this.props ,...obj };
-    this.props = newProps;
-    this.forceUpdate();
-  }
+
 
 
   componentDidMount () {
     const callback = (event) => {
-        if (event.target.className === 'mod_button') {
+      console.log( event.target.className );
 
-            var data = this.props.table.getData().filter( (x) => {
+          console.log("hello");
+            var data = this.props.table.getSourceData().filter( (x) => {
               console.log("getting data");
 
               // magic - check if all keys are null
@@ -35,13 +43,14 @@ class HTable extends Component {
             asc = !asc;
             console.log(sorted);
             this.props.table.loadData(sorted);
-        }
-    }
+          }
 
 
+    console.log("hihowareyou");
 		var asc = true;
 		if(this.props.table_id === 1) {
       console.log("id" + this.props.table_id);
+      console.log("log" + event.target.class);
 			Handsontable.dom.addEvent(document.getElementById("hot-div" + this.props.table_id), 'click', callback.bind(this));
 		}
 	}
@@ -49,12 +58,13 @@ class HTable extends Component {
 
   setHeaders = (headers) => {
 		if(this.props.table_id === 1) {
+      console.log("hithere")
 			this.props.table.updateSettings( {
 
 	            colHeaders(col) {
 	            	// GHETTO - change later if necessary
 	            	// Sets markup of each column header
-        	    	return "<b>" + headers[col] + "</b>" + "<button class='mod_button' name='" + headers[col] + "' style='margin-left: 10%;'>\u25BC</button>";
+        	    	return "<b>" + headers[col] + "</b>" + "<button class='wtHolder' name='" + headers[col] + "' style='margin-left: 10%;'>\u25BC</button>";
 	        	}
 	        });
     }
@@ -76,6 +86,7 @@ class HTable extends Component {
 
 	displayOn = () => {
     this.setState({visible: true});
+    console.log("display on is called");
     ReactDOM.findDOMNode(this.tempref).style.display = 'block';
 	}
 
@@ -99,15 +110,6 @@ HTable.defaultProps = {
   table_id: 0
 };
 
-const sortByKey = (array, key, asc) => {
-  return array.sort( (a, b) => {
-    const x = a[key];
-    const y = b[key];
-    if(asc)
-      return ((x < y) ? -1 : ((x > y) ? 1 : 0));
-    else
-      return ((x > y) ? -1 : ((x < y) ? 1 : 0));
-  });
-}
+
 
 export default HTable;
