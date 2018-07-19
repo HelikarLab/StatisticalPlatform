@@ -16,3 +16,4 @@ six==1.11.0
 urllib3==1.22
 whitenoise
 django-webpack-loader
+django-cors-headers

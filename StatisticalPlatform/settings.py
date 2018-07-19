@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'rest_auth.registration',
     'webpack_loader',
+    'corsheaders',
 
     'StatisticalPlatform',
 ]
@@ -72,6 +73,7 @@ REST_AUTH_REGISTER_SERIALIZERS = { 'REGISTER_SERIALIZER': 'StatisticalPlatform.s
 ACCOUNT_AUTHENTICATION_METHOD = 'username' #username until development, change to email in production
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -161,8 +163,8 @@ WEBPACK_LOADER = {
         'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json')
     }
 }
-CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_ALLOW_ALL = True   
 CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_WHITELIST = (
-    'http://localhost:3000' 
+    'localhost:3000'
 )

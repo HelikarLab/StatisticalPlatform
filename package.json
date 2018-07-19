@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "In a python3 virtualenv 1) git clone https://github.com/tejasavkhattar/StatisticalPlatform.git 2) cd StatisticalPlatform 3) git checkout develop 4) cd Database 5) pip install -r requirements.txt 6) python manage.py makemigrations 7) python manage.py migrate 8) python manage.py createsuperuser 9) python manage.py runserver",
   "main": "index.js",
+  "proxy": "http://localhost:8000", 
   "scripts": {
     "build": "webpack --watch"
   },

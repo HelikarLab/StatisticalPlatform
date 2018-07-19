@@ -2,9 +2,12 @@ import Particles from 'react-particles-js';
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
-import {BrowserRouter, Route, Switch, Redirect} from 'react-router-dom';
+import {BrowserRouter, Route, Switch, Redirect, Link} from 'react-router-dom';
 import {Form, FormGroup, FormControl, Col, Checkbox, FieldGroup, ControlLabel, Button, Grid, Row} from 'react-bootstrap';
 
+axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
+axios.defaults.xsrfCookieName = "csrftoken";
+axios.defaults.withCredentials = true;
 const particleOpt = {
   "particles": {
     "number": {
@@ -124,16 +127,18 @@ class LoginPage extends Component {
           Password: ""
         };
     }
-    componentDidMount = async () => {
-      const tokenKey = localStorage.getItem("PreviousKey");
-      if(typeof tokenKey == 'string') {
-        window.location.href = "/home";
-      }
-    }
+    // componentDidMount = async () => {
+    //   const tokenKey = localStorage.getItem("PreviousKey");
+    //   if(typeof tokenKey == 'string') {
+    //     window.location.href = "/home";
+    //   }
+    // }
+
+
 
     signInUser = () => {
       const { Username, Password } = this.state;
-      axios.post("http://127.0.0.1:8000/api/rest-auth/login/",{username: Username, password: Password })
+      axios.post("/api/rest-auth/login/",{username: Username, password: Password })
       .then(resp => {
         if(resp.data.key) {
           localStorage.setItem("PreviousKey", resp.data.key);
@@ -159,8 +164,8 @@ class LoginPage extends Component {
             </Col>
             <Col xs={6} md={3} className="head">
               <center>
-                <Button bsSize="large" className="headbut">Register</Button>
-              <Button bsSize="large" >Home</Button>
+              <Link to="/signup">  <Button bsSize="large" className="headbut">Register</Button></Link>
+            <Link to="/"> <Button bsSize="large" >Home</Button></Link>
               </center>
           </Col>
         </Row>

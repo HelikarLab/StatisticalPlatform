@@ -1,9 +1,12 @@
 import Particles from 'react-particles-js';
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import {BrowserRouter, Route, Switch, Link} from 'react-router-dom';
 import {Form, FormGroup, FormControl, Col, Checkbox, FieldGroup, ControlLabel, Button, Grid, Row} from 'react-bootstrap';
 import axios from 'axios';
+axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
+axios.defaults.xsrfCookieName = "csrftoken";
+axios.defaults.withCredentials = true;
 const particleOpt = {
   "particles": {
     "number": {
@@ -129,7 +132,7 @@ class SignupPage extends Component {
     }
     signUpUser = () => {
       const { Username, Password1, Password2, Email, FirstName, LastName } = this.state;
-      axios.post("http://127.0.0.1:8000/api/rest-auth/registration/",{username: Username, password1: Password1, password2: Password2, email: Email, first_name: FirstName, last_name: LastName })
+      axios.post("/api/rest-auth/registration/",{username: Username, password1: Password1, password2: Password2, email: Email, first_name: FirstName, last_name: LastName })
       .then(resp => {
         alert("Check console for verification link");
       })
@@ -147,8 +150,8 @@ class SignupPage extends Component {
             </Col>
             <Col xs={6} md={3} className="head">
               <center>
-                <Button bsSize="large" className="headbut">Sign In</Button>
-              <Button bsSize="large" >Home</Button>
+              <Link to="/login">  <Button bsSize="large" className="headbut">Sign In</Button></Link>
+            <Link to="/">  <Button bsSize="large" >Home</Button></Link>
               </center>
 
           </Col>
