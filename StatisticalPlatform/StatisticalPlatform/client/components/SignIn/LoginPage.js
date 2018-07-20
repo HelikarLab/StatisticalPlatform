@@ -8,6 +8,7 @@ import {Form, FormGroup, FormControl, Col, Checkbox, FieldGroup, ControlLabel, B
 axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.withCredentials = true;
+
 const particleOpt = {
   "particles": {
     "number": {
@@ -127,22 +128,27 @@ class LoginPage extends Component {
           Password: ""
         };
     }
-    // componentDidMount = async () => {
-    //   const tokenKey = localStorage.getItem("PreviousKey");
-    //   if(typeof tokenKey == 'string') {
-    //     window.location.href = "/home";
-    //   }
-    // }
 
-
+    componentDidMount = async () => {
+      const tokenKey = await localStorage.getItem("PreviousKey");
+      if(typeof tokenKey == 'string' && tokenKey != null && tokenKey != 'null') {
+        console.log(tokenKey)
+        window.location.href = "/home";
+      }
+    }
 
     signInUser = () => {
       const { Username, Password } = this.state;
       axios.post("/api/rest-auth/login/",{username: Username, password: Password })
-      .then(resp => {
+      .then(async resp => {
         if(resp.data.key) {
-          localStorage.setItem("PreviousKey", resp.data.key);
-          window.location.href = "/home";
+         await localStorage.setItem("PreviousKey", resp.data.key);
+          try{
+            window.location.href = '/home'
+          }
+          catch(e){
+            console.log(e)
+          }
         }
         else {
           alert("There is some Technical error")

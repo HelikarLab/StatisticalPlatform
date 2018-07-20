@@ -21,7 +21,13 @@ import ClassifyModal from './Classification/ClassifyModal';
 import DashboardModal from './Dashboard/DashboardModal';
 import FileField from './File/FileField';
 import SVMModal from './Classification/SVMModal';
+import axios from 'axios';
 import {Navbar, Nav, DropdownButton, MenuItem, Modal, NavItem, NavDropdown, } from 'react-bootstrap';
+
+
+axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
+axios.defaults.xsrfCookieName = "csrftoken";
+axios.defaults.withCredentials = true;
 
 class MyBar extends Component {
 
@@ -31,6 +37,16 @@ class MyBar extends Component {
     };
 
   }
+
+  logOutUser = () => {
+    axios.post("/api/rest-auth/logout/")
+    .then(async resp => {
+      alert("logged out");
+      await localStorage.setItem("PreviousKey", null);
+      window.location.href = "/";
+    })
+  }
+
   setText = (modal, text) => {
     this.refs[modal].setText(text);
   }
@@ -422,7 +438,7 @@ class MyBar extends Component {
             </NavItem>
 
             <NavItem eventKey={1} href="#">
-              <MenuItem eventKey={1.1}  onClick = {() => this.setState({showDash: true})}>LogOut</MenuItem>
+              <MenuItem eventKey={1.1} onClick={this.logOutUser}  >LogOut</MenuItem>
             </NavItem>
           </Nav>
         </Navbar.Collapse>

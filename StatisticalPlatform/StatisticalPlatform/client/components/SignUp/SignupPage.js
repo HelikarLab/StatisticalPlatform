@@ -127,14 +127,27 @@ class SignupPage extends Component {
           Password2: "",
           Email: "",
           FirstName: "",
-          LastName: ""
+          LastName: "",
+          errorMap:{}
         };
     }
     signUpUser = () => {
       const { Username, Password1, Password2, Email, FirstName, LastName } = this.state;
       axios.post("/api/rest-auth/registration/",{username: Username, password1: Password1, password2: Password2, email: Email, first_name: FirstName, last_name: LastName })
       .then(resp => {
-        alert("Check console for verification link");
+        console.log("In response");
+        console.log(resp);
+        // if(this.state.Password1 == this.state.Password2) {
+        //   alert("Check console for verification link")
+        // }
+        // else {
+        //   alert("Passwords do not match")
+        // }
+      }).catch(e => {
+        console.log("In Error");
+        const data = JSON.stringify(e);
+        const showData = JSON.parse(data).response.data;
+        this.setState({errorMap: {...showData}});
       })
     }
   render() {
@@ -228,6 +241,17 @@ class SignupPage extends Component {
                                                         </FormGroup>
 
                                                       </Col>
+                                                    </Row>
+                                                    <Row>
+                                                        {
+                                                          Object.entries(this.state.errorMap).length > 0 ? (
+
+                                                            alert(Object.entries(this.state.errorMap).reduce((acc,ind)=>{
+                                                                return(acc + ind[0]+": " + ind[1] +'\n');
+                                                            },""))
+
+                                                          ):""
+                                                        }
                                                     </Row>
                 <center> <Button onClick ={this.signUpUser}>Submit</Button></center>
                    </form>
