@@ -435,6 +435,13 @@ handleClick (buttonType, functionName, propertyName, plotType) {
       this.setState({plot_type: plot_type, var_x: var_x, vars: vars});
       break;
 
+    case "densityplot":
+      plot_type = arguments[1];
+      var_x = arguments[3];
+      this.setState({multi: false, plot: true});
+      this.setState({plot_type: plot_type, var_x: var_x});
+      break;
+
     /*
      *	Display descriptive stats table
      */
@@ -708,6 +715,7 @@ handleClick (buttonType, functionName, propertyName, plotType) {
       <div>
 				<MyBar ref={ref => this.top_bar = ref} onClick={this.handleClick} variables={this.state.variables} plotenabled={this.state.plot_type} />
 	        	<div>
+              <div id="plotdiv"></div>
               {thing}
 	        		<div id="temp_plot_thing"></div>
               <HTable  ref={ref => this.data_ref = ref} table={this.state.data_table} table_id={1} />

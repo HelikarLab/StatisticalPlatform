@@ -9,6 +9,7 @@ import ScatterPlotModal from './Plot/ScatterPlotModal';
 import BoxPlotModal from './Plot/BoxPlotModal';
 import ScatterMatrixModal from './Plot/ScatterMatrixModal';
 import HeatmapModal from './Plot/HeatmapModal';
+import DensityPlotModal from './Plot/DensityPlotModal';
 import ChoiceModal from './Analyze/ChoiceModal';
 import BivariateModal from './Analyze/BivariateModal';
 import TestsModal from './Analyze/TestsModal';
@@ -175,6 +176,13 @@ class MyBar extends Component {
 	SVMClick = (child, vars, file, evaluate, ratio) => {
 		this.props.onClick("classify", vars, file, evaluate, ratio, "svm");
 	}
+
+  plotDensity = (plotType, child, var_x) => {
+  this.props.onClick("show-table");
+  this.props.onClick("densityplot", plotType, child, var_x);
+  this.props.onClick("show-table");
+  }
+
   closeModal = (obj) => {
     this.setState(obj)
   }
@@ -279,6 +287,18 @@ class MyBar extends Component {
                     onClick={this.plotD3Chart.bind(this, "plotScatterMatrix")}
                     variables={this.props.variables ? this.props.variables : ['Car','Car2', 'Car3']}  />
               </Modal>
+
+              <MenuItem eventKey={3.8} onClick = {() => this.setState({showDensityPlot: true})}>Density Plot</MenuItem>
+              <Modal
+                {...this.props}
+                show={this.state.showDensityPlot? this.state.showDensityPlot : false}
+                onHide={this.setState.bind(this,{showDensityPlot: false})}>
+                  <DensityPlotModal
+                    onClose={(val) => this.closeModal(val)}
+                    onClick={this.plotDensity.bind(this, "plotDensityPlot")}
+                    variables={this.props.variables ? this.props.variables : ['Car','Car2', 'Car3']}  />
+              </Modal>
+
             </NavDropdown>
 
             <NavDropdown eventKey={4} title="Analyze" id="basic-nav-dropdown">
@@ -438,7 +458,7 @@ class MyBar extends Component {
             </NavItem>
 
             <NavItem eventKey={1} href="#">
-              <MenuItem eventKey={1.1} onClick={this.logOutUser}  >LogOut</MenuItem>
+              <MenuItem eventKey={1.1} onClick={this.logOutUser} >LogOut</MenuItem>
             </NavItem>
           </Nav>
         </Navbar.Collapse>
