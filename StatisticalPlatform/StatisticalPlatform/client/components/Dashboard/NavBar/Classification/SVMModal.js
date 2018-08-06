@@ -16,7 +16,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>
 import React, {Component} from 'react';
 import {Button, Modal, Checkbox, FormGroup, ControlLabel, FormControl, FieldGroup} from 'react-bootstrap';
 
-class ClassifyModal extends Component {
+class SVMModal extends Component {
 
   constructor(props) {
     super(props);
@@ -29,34 +29,17 @@ class ClassifyModal extends Component {
     this.setState({ show: false });
   }
 
-  setText = (text) => {
-		document.getElementById("eval").innerHTML = text;
-	}
-
   handleClick = () => {
 		this.props.onClose({showSVM: false});
-		console.log(this.refs.file.getInputDOMNode().files[0]),
 		this.props.onClick(
       this,
-      this.vars.value,
-      this.refs.file.getInputDOMNode().files[0],
-      false
+      this.formula.value,
+      this.kernel.value,
     );
 	}
-
-	evalClick = () => {
-		this.props.onClick(
-      this.vars.value,
-      null,
-      true,
-      this.tsize.value
-    );
-	}
-
 
   render() {
     const options_list = [];
-
 		this.props.variables.forEach( (variable) => {
 			options_list.push(<option value={variable}>{variable}</option>);
 		});
@@ -64,7 +47,7 @@ class ClassifyModal extends Component {
 
     return(
       <div className="modal-container">
-        <Modal.Header>
+        <Modal.Header >
           <Modal.Title id="contained-modal-title">
             Choose Data
           </Modal.Title>
@@ -72,22 +55,18 @@ class ClassifyModal extends Component {
         <Modal.Body>
           <form>
             <FormGroup controlId="formControlsSelect">
-              <ControlLabel>Output Column</ControlLabel>
-              <FormControl componentClass="select" placeholder="select" inputRef={ref => { this.vars = ref; }}>
-                {options_list}
-              </FormControl>
-              <br />
-              <ControlLabel>Training set size (%)</ControlLabel>
-              <FormControl inputRef={ref => { this.tsize = ref; }} type='text' />
-              <br />
-              <div id="eval"></div>
-					    <Button onClick={this.evalClick}>Evaluate</Button>
-              <br />
-              <br />
-              <ControlLabel>File</ControlLabel>
-              <input type='file' label='File' ref='file' />
-          </FormGroup>
-        </form>
+            <ControlLabel>Factor Variable</ControlLabel>
+          <FormControl componentClass="select" placeholder="select" inputRef={ref => { this.formula = ref; }}>
+              {options_list}
+            </FormControl>
+        <ControlLabel>Kernel</ControlLabel>
+      <FormControl componentClass="select" inputRef={ref => { this.kernel = ref; }}>
+          <option value='radial'>Radial</option>
+        <option value='linear'>Linear</option>
+      <option value='polynomial'>Polynomial</option>
+        </FormControl>
+            </FormGroup>
+          </form>
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={()=>{this.props.onClose({showSVM: false})}}>Close</Button>
@@ -98,4 +77,4 @@ class ClassifyModal extends Component {
   }
 }
 
-export default ClassifyModal;
+export default SVMModal;

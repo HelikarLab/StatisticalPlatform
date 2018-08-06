@@ -20,6 +20,7 @@ import TimeSeriesModal from './Analyze/TimeSeriesModal';
 import KMeansModal from './Clustering/KMeansModal';
 import DendogramModal from './Clustering/DendogramModal';
 import DensityClusterModal from './Clustering/DensityClusterModal';
+import DistributionClusterModal from './Clustering/DistributionClusterModal';
 import ClassifyModal from './Classification/ClassifyModal';
 import DashboardModal from './Dashboard/DashboardModal';
 import FileField from './File/FileField';
@@ -175,8 +176,10 @@ class MyBar extends Component {
 		this.props.onClick("classify", vars, file, evaluate, ratio, "naiveBayes");
 	}
 
-	SVMClick = (child, vars, file, evaluate, ratio) => {
-		this.props.onClick("classify", vars, file, evaluate, ratio, "svm");
+  SVMClick = (plotType, child, formula, kernel) => {
+    this.props.onClick("show-table");
+    this.props.onClick("svmclassification", plotType, child, formula, kernel);
+    this.props.onClick("show-table");
 	}
 
   plotDensity = (plotType, child, var_x) => {
@@ -196,6 +199,13 @@ class MyBar extends Component {
   this.props.onClick("pcaplot", plotType, child, var_x);
   this.props.onClick("show-table");
   }
+
+  plotDistributionCluster = (plotType, child, var_x) => {
+    this.props.onClick("show-table");
+    this.props.onClick("distributionplot", plotType, child, var_x);
+    this.props.onClick("show-table");
+  }
+
 
   closeModal = (obj) => {
     this.setState(obj)
@@ -450,6 +460,18 @@ class MyBar extends Component {
                     onClick={this.plotDensityCluster.bind(this, "plotDensityBasedClustering")}
                     variables={this.props.variables ? this.props.variables : ['Car','Car2', 'Car3']}  />
               </Modal>
+
+              <MenuItem eventKey={5.1} onClick = {() => this.setState({showDistributionCluster: true})}>Distribution Based </MenuItem>
+              <Modal
+                {...this.props}
+                show={this.state.showDistributionCluster? this.state.showDistributionCluster : false}
+                onHide={this.setState.bind(this,{showDistributionCluster: false})}>
+                  <DistributionClusterModal
+                    onClose={(val) => this.closeModal(val)}
+                    onClick={this.plotDistributionCluster.bind(this, "plotDistributionBasedClustering")}
+                    variables={this.props.variables ? this.props.variables : ['Car','Car2', 'Car3']}  />
+              </Modal>
+
             </NavDropdown>
 
             <NavDropdown eventKey={6} title="Classification" id="basic-nav-dropdown">
@@ -472,8 +494,8 @@ class MyBar extends Component {
                 onHide={this.setState.bind(this,{showSVM: false})}>
                   <SVMModal
                     onClose={(val) => this.closeModal(val)}
-                    ref="svm_modal"
-                    onClick={this.SVMClick}
+
+                    onClick={this.SVMClick.bind(this, "plotsvmclassification")}
                     variables={this.props.variables ? this.props.variables : ['Car','Car2', 'Car3']}  />
               </Modal>
 

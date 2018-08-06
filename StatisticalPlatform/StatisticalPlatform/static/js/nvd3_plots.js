@@ -171,6 +171,47 @@ function makePlot(obj, state) {
 		});
 	}
 
+	if (type==="plotsvmclassification") {
+		let formula  = state.formula;
+		let kernel  = state.kernel;
+
+		ocpu.seturl("http://localhost:5656/ocpu/apps/tejasavkhattar/testpackage/R");
+		var data = dataJSON, plotData = {};
+		plotData.formula  = formula;
+		plotData.kernel  = kernel;
+
+		console.log("tejasav" + JSON.stringify(plotData));
+
+		var req = $("#plotdiv").rplot("supportvectormachine", {
+    dat : data,
+		formul : formula,
+		k : kernel
+		})
+
+		req.fail(function(){
+    alert("R returned an error: " + req.responseText);
+		});
+	}
+
+	if (type==="plotDistributionBasedClustering") {
+		var var_x = state.var_x;
+		console.log("tejasav" + var_x);
+		ocpu.seturl("http://localhost:5656/ocpu/apps/tejasavkhattar/testpackage/R");
+
+		var data = dataJSON, plotData = {};
+
+		plotData.var_x = var_x;
+
+		var req = $("#plotdiv").rplot("distributionbasedclustering", {
+    data : data,
+    classify : var_x
+		})
+		//optional: add custom callbacks
+		req.fail(function(){
+		    alert("R returned an error: " + req.responseText);
+		});
+	}
+
 	if (type === "plotKMeans") {
 
 		var var_x = state.var_x, var_y = state.var_y, kvalue = state.kvalue;

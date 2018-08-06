@@ -459,6 +459,21 @@ handleClick (buttonType, functionName, propertyName, plotType) {
         this.setState({plot_type: plot_type, var_x: var_x});
         break;
 
+    case "distributionplot":
+      plot_type = arguments[1];
+      var_x = arguments[3];
+      this.setState({multi: false, plot: true});
+      this.setState({plot_type: plot_type, var_x: var_x});
+      break;
+
+    case "svmclassification":
+      plot_type = arguments[1];
+      let formula  = arguments[3];
+      let kernel  = arguments[4];
+      this.setState({multi: false, plot: true});
+      this.setState({plot_type: plot_type, formula: formula, kernel: kernel});
+      break;
+
     /*
      *	Display descriptive stats table
      */
