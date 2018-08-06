@@ -452,6 +452,13 @@ handleClick (buttonType, functionName, propertyName, plotType) {
         this.setState({plot_type: plot_type, var_x: var_x, var_y: var_y, minpts: minpts, eps: eps});
         break;
 
+    case "pcaplot":
+        plot_type = arguments[1];
+        var_x = arguments[3];
+        this.setState({multi: false, plot: true});
+        this.setState({plot_type: plot_type, var_x: var_x});
+        break;
+
     /*
      *	Display descriptive stats table
      */

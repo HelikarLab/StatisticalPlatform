@@ -11,6 +11,7 @@ import ScatterMatrixModal from './Plot/ScatterMatrixModal';
 import HeatmapModal from './Plot/HeatmapModal';
 import DensityPlotModal from './Plot/DensityPlotModal';
 import ChoiceModal from './Analyze/ChoiceModal';
+import PCAModal from './Analyze/PCAModal';
 import BivariateModal from './Analyze/BivariateModal';
 import TestsModal from './Analyze/TestsModal';
 import QQPlotModal from './Analyze/QQPlotModal';
@@ -188,6 +189,12 @@ class MyBar extends Component {
     this.props.onClick("show-table");
     this.props.onClick("densitybasedclustering", plotType, child, var_x, var_y, minpts, eps);
     this.props.onClick("show-table");
+  }
+
+  plotPCA = (plotType, child, var_x) => {
+  this.props.onClick("show-table");
+  this.props.onClick("pcaplot", plotType, child, var_x);
+  this.props.onClick("show-table");
   }
 
   closeModal = (obj) => {
@@ -395,6 +402,17 @@ class MyBar extends Component {
                   <TimeSeriesModal
                     onClose={(val) => this.closeModal(val)}
                     onClick={this.plotD3Chart.bind(this, "plotTimeSeries")}
+                    variables={this.props.variables ? this.props.variables : ['Car','Car2', 'Car3']}  />
+              </Modal>
+
+              <MenuItem eventKey={4.9} onClick = {() => this.setState({showPCAPlot: true})}>PCA Plot</MenuItem>
+              <Modal
+                {...this.props}
+                show={this.state.showPCAPlot? this.state.showPCAPlot : false}
+                onHide={this.setState.bind(this,{showPCAPlot: false})}>
+                  <PCAModal
+                    onClose={(val) => this.closeModal(val)}
+                    onClick={this.plotPCA.bind(this, "plotPCAPlot")}
                     variables={this.props.variables ? this.props.variables : ['Car','Car2', 'Car3']}  />
               </Modal>
 
