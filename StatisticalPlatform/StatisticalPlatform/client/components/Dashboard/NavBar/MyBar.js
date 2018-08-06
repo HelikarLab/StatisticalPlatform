@@ -18,6 +18,7 @@ import ComatrixModal from './Analyze/ComatrixModal'
 import TimeSeriesModal from './Analyze/TimeSeriesModal';
 import KMeansModal from './Clustering/KMeansModal';
 import DendogramModal from './Clustering/DendogramModal';
+import DensityClusterModal from './Clustering/DensityClusterModal';
 import ClassifyModal from './Classification/ClassifyModal';
 import DashboardModal from './Dashboard/DashboardModal';
 import FileField from './File/FileField';
@@ -181,6 +182,12 @@ class MyBar extends Component {
   this.props.onClick("show-table");
   this.props.onClick("densityplot", plotType, child, var_x);
   this.props.onClick("show-table");
+  }
+
+  plotDensityCluster = (plotType, child, var_x, var_y, minpts, eps) => {
+    this.props.onClick("show-table");
+    this.props.onClick("densitybasedclustering", plotType, child, var_x, var_y, minpts, eps);
+    this.props.onClick("show-table");
   }
 
   closeModal = (obj) => {
@@ -412,6 +419,17 @@ class MyBar extends Component {
                   <DendogramModal
                     onClose={(val) => this.closeModal(val)}
                     onClick={this.plotD3Chart.bind(this, "plotDendogram")}
+                    variables={this.props.variables ? this.props.variables : ['Car','Car2', 'Car3']}  />
+              </Modal>
+
+              <MenuItem eventKey={5.3} onClick = {() => this.setState({showDensityCluster: true})}>Density Based </MenuItem>
+              <Modal
+                {...this.props}
+                show={this.state.showDensityCluster? this.state.showDensityCluster : false}
+                onHide={this.setState.bind(this,{showDensityCluster: false})}>
+                  <DensityClusterModal
+                    onClose={(val) => this.closeModal(val)}
+                    onClick={this.plotDensityCluster.bind(this, "plotDensityBasedClustering")}
                     variables={this.props.variables ? this.props.variables : ['Car','Car2', 'Car3']}  />
               </Modal>
             </NavDropdown>

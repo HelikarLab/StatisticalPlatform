@@ -124,6 +124,34 @@ function makePlot(obj, state) {
 		});
 	}
 
+	if (type==="plotDensityBasedClustering") {
+		var var_x = state.var_x;
+		var var_y = state.var_y;
+		var minpts = state.minpts;
+		var eps = state.eps;
+		ocpu.seturl("http://localhost:5656/ocpu/apps/tejasavkhattar/testpackage/R");
+
+		var data = dataJSON, plotData = {};
+
+		plotData.var_x = var_x;
+		plotData.var_y = var_y;
+		plotData.minpts = minpts;
+		plotData.eps = eps;
+
+		var req = $("#plotdiv").rplot("densitybasedclustering", {
+		data : data,
+		var_x : var_x,
+		var_y : var_y,
+		eps : eps,
+		MinPts : minpts
+
+	})
+//optional: add custom callbacks
+		req.fail(function(){
+			alert("R returned an error: " + req.responseText);
+		});
+	}
+
 	if (type === "plotKMeans") {
 
 		var var_x = state.var_x, var_y = state.var_y, kvalue = state.kvalue;

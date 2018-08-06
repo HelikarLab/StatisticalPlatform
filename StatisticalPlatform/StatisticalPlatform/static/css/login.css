@@ -76,3 +76,7 @@
 .MainPage{
   color: #f40035;
 }
+
+#plotdiv {
+    height: 400px;
+}

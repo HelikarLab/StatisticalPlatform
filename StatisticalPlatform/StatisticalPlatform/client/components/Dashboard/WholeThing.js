@@ -442,6 +442,16 @@ handleClick (buttonType, functionName, propertyName, plotType) {
       this.setState({plot_type: plot_type, var_x: var_x});
       break;
 
+    case "densitybasedclustering":
+        plot_type = arguments[1];
+        var_x = arguments[3];
+        var_y = arguments[4];
+        let minpts = arguments[5];
+        let eps = arguments[6];
+        this.setState({multi: false, plot: true});
+        this.setState({plot_type: plot_type, var_x: var_x, var_y: var_y, minpts: minpts, eps: eps});
+        break;
+
     /*
      *	Display descriptive stats table
      */
