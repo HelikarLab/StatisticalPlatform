@@ -89,7 +89,7 @@ function makePlot(obj, state) {
 
 	if (type === "plotDendogram") {
 
-		ocpu.seturl("//cloud.opencpu.org/ocpu/apps/tejasavkhattar/test/R");
+		ocpu.seturl("http://localhost:5656/ocpu/apps/tejasavkhattar/testpackage/R");
 
 		var data = dataJSON;
 
@@ -216,7 +216,7 @@ function makePlot(obj, state) {
 
 		var var_x = state.var_x, var_y = state.var_y, kvalue = state.kvalue;
 
-		ocpu.seturl("//cloud.opencpu.org/ocpu/apps/tejasavkhattar/test/R");
+		ocpu.seturl("http://localhost:5656/ocpu/apps/tejasavkhattar/testpackage/R");
 
 		var data = dataJSON, plotData = {};
 		plotData.kvalue = kvalue;
@@ -238,7 +238,7 @@ function makePlot(obj, state) {
 
 	if (type === "plotScatterMatrix") {
 
-		ocpu.seturl("//cloud.opencpu.org/ocpu/apps/tejasavkhattar/test/R");
+		ocpu.seturl("http://localhost:5656/ocpu/apps/tejasavkhattar/testpackage/R");
 
 		var data = dataJSON;
 
@@ -258,7 +258,7 @@ function makePlot(obj, state) {
 
 	var var_x = state.var_x, var_y = state.var_y;
 
-		ocpu.seturl("//cloud.opencpu.org/ocpu/apps/tejasavkhattar/test/R");
+		ocpu.seturl("http://localhost:5656/ocpu/apps/tejasavkhattar/testpackage/R");
 
 		var data = dataJSON, plotData = {};
 		plotData.var_x = var_x;
@@ -279,7 +279,7 @@ function makePlot(obj, state) {
 
 	if (type === "plotTimeSeries") {
 
-		ocpu.seturl("//cloud.opencpu.org/ocpu/apps/tejasavkhattar/test/R");
+		ocpu.seturl("http://localhost:5656/ocpu/apps/tejasavkhattar/testpackage/R");
 
 		var data = dataJSON, plotData = {};
 
@@ -298,7 +298,7 @@ function makePlot(obj, state) {
 
 	if (type === "plotComatrix") {
 
-		ocpu.seturl("//cloud.opencpu.org/ocpu/apps/tejasavkhattar/test/R");
+		ocpu.seturl("http://localhost:5656/ocpu/apps/tejasavkhattar/testpackage/R");
 
 		var method = state.comatrix;
 		var data = dataJSON;
@@ -327,7 +327,7 @@ function makePlot(obj, state) {
 	if (type == "plotBarChart") {
 
 		if (state.simple_bool) {
-			ocpu.seturl("//cloud.opencpu.org/ocpu/apps/tejasavkhattar/test/R");
+			ocpu.seturl("http://localhost:5656/ocpu/apps/tejasavkhattar/testpackage/R");
 
 			var data = dataJSON, value = state.var_x, plotData = {};
 
@@ -345,7 +345,7 @@ function makePlot(obj, state) {
 		}
 		if (state.group_bool) {
 
-			ocpu.seturl("//cloud.opencpu.org/ocpu/apps/tejasavkhattar/test/R");
+			ocpu.seturl("http://localhost:5656/ocpu/apps/tejasavkhattar/testpackage/R");
 
 			var data = dataJSON;
 
@@ -362,7 +362,7 @@ function makePlot(obj, state) {
 		}
 		if (state.stack_bool) {
 
-			ocpu.seturl("//cloud.opencpu.org/ocpu/apps/tejasavkhattar/test/R");
+			ocpu.seturl("http://localhost:5656/ocpu/apps/tejasavkhattar/testpackage/R");
 
 			var data = dataJSON;
 
@@ -381,7 +381,7 @@ function makePlot(obj, state) {
 
 	if (type == "plotScatterPlot") {
 		var var_x = state.var_x, var_y = state.var_y, straight_bool = state.straight_bool, exponential_bool = state.exponential_bool, polynomial_bool = state.polynomial_bool, logarithmic_bool = state.logarithmic_bool;
-		ocpu.seturl("//cloud.opencpu.org/ocpu/apps/tejasavkhattar/test/R");
+		ocpu.seturl("http://localhost:5656/ocpu/apps/tejasavkhattar/testpackage/R");
 		var data = dataJSON, plotData = {};
 
 		var req = ocpu.rpc("scatterplot", {data: data, var_x: var_x, var_y: var_y}, function(output){
@@ -407,7 +407,7 @@ function makePlot(obj, state) {
 	}
 
 	if (type == "plotHeatmap") {
-		ocpu.seturl("//cloud.opencpu.org/ocpu/apps/tejasavkhattar/test/R");
+		ocpu.seturl("http://localhost:5656/ocpu/apps/tejasavkhattar/testpackage/R");
 
 		var data = dataJSON, plotData = {};
 

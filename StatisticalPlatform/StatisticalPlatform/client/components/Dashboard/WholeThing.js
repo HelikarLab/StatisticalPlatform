@@ -5,9 +5,6 @@ import $ from 'jquery';
 import MyBar from './NavBar/MyBar';
 import HTable from './HTable';
 import Papa from 'papaparse';
-import * as d3 from "d3";
-
-
 
 class WholeThing extends Component {
 
@@ -31,6 +28,7 @@ class WholeThing extends Component {
       showTable: false,
       multi: true,
       plot_count: 4,
+      visiblehandler: false
     };
     this.handleClick = this.handleClick.bind(this);
   }
@@ -438,7 +436,7 @@ handleClick (buttonType, functionName, propertyName, plotType) {
     case "densityplot":
       plot_type = arguments[1];
       var_x = arguments[3];
-      this.setState({multi: false, plot: true});
+      this.setState({plot: true, visiblehandler: true});
       this.setState({plot_type: plot_type, var_x: var_x});
       break;
 
@@ -448,21 +446,21 @@ handleClick (buttonType, functionName, propertyName, plotType) {
         var_y = arguments[4];
         let minpts = arguments[5];
         let eps = arguments[6];
-        this.setState({multi: false, plot: true});
+        this.setState({ plot: true, visiblehandler: true});
         this.setState({plot_type: plot_type, var_x: var_x, var_y: var_y, minpts: minpts, eps: eps});
         break;
 
     case "pcaplot":
         plot_type = arguments[1];
         var_x = arguments[3];
-        this.setState({multi: false, plot: true});
+        this.setState({plot: true, visiblehandler: true});
         this.setState({plot_type: plot_type, var_x: var_x});
         break;
 
     case "distributionplot":
       plot_type = arguments[1];
       var_x = arguments[3];
-      this.setState({multi: false, plot: true});
+      this.setState({ plot: true, visiblehandler: true});
       this.setState({plot_type: plot_type, var_x: var_x});
       break;
 
@@ -470,7 +468,7 @@ handleClick (buttonType, functionName, propertyName, plotType) {
       plot_type = arguments[1];
       let formula  = arguments[3];
       let kernel  = arguments[4];
-      this.setState({multi: false, plot: true});
+      this.setState({plot: true, visiblehandler: true});
       this.setState({plot_type: plot_type, formula: formula, kernel: kernel});
       break;
 
@@ -731,8 +729,6 @@ handleClick (buttonType, functionName, propertyName, plotType) {
 
 
   render() {
-    console.log("***********Data State****************");
-    console.table(this.state.data);
     if(!this.state.multi)
 			var thing = <svg id="plot-panel" ref={ref => this.plot_ref = ref}></svg>;
 		else {
@@ -746,8 +742,9 @@ handleClick (buttonType, functionName, propertyName, plotType) {
 
       <div>
 				<MyBar ref={ref => this.top_bar = ref} onClick={this.handleClick} variables={this.state.variables} plotenabled={this.state.plot_type} />
-	        	<div>
-              <div id="plotdiv"></div>
+
+      <div style={{display: this.state.visiblehandler ? 'block': 'none', height:1000}} id="plotdiv"></div>
+          <div>
               {thing}
 	        		<div id="temp_plot_thing"></div>
               <HTable  ref={ref => this.data_ref = ref} table={this.state.data_table} table_id={1} />

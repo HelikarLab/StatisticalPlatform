@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "In a python3 virtualenv 1) git clone https://github.com/tejasavkhattar/StatisticalPlatform.git 2) cd StatisticalPlatform 3) git checkout develop 4) cd Database 5) pip install -r requirements.txt 6) python manage.py makemigrations 7) python manage.py migrate 8) python manage.py createsuperuser 9) python manage.py runserver",
   "main": "index.js",
-  "proxy": "http://localhost:8000", 
+  "proxy": "http://localhost:8000",
   "scripts": {
     "build": "webpack --watch"
   },
@@ -47,14 +47,12 @@
     "bootstrap": "^4.1.1",
     "colorbrewer": "^1.1.0",
     "crossfilter": "^1.3.12",
-    "d3": "^3.5.17",
     "dc": "^2.2.0",
     "handsontable": "^4.0.0",
     "jquery": "^3.3.1",
     "jquery.tipsy": "^1.0.3",
     "live-server": "^1.2.0",
     "node-libs-browser": "^2.1.0",
-    "nvd3": "^1.8.6",
     "opencpu": "^0.4.0",
     "papaparse": "^4.5.0",
     "popper.js": "^1.14.3",
