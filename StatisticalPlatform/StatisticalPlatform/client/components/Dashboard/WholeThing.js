@@ -383,7 +383,7 @@ handleClick (buttonType, functionName, propertyName, plotType) {
       let var_x = arguments[3];
       let var_y = arguments[4];
       const kvalue = arguments[5];
-      this.setState({multi: false, plot: true});
+      this.setState({multi: false, plot: true, visiblehandler: false});
       this.setState({plot_type: plot_type, var_x: var_x, var_y: var_y, kvalue: kvalue});
       break;
 
@@ -391,7 +391,7 @@ handleClick (buttonType, functionName, propertyName, plotType) {
       plot_type = arguments[1];
       var_x = arguments[3];
       var_y = arguments[4];
-      this.setState({multi: false, plot: true});
+      this.setState({multi: false, plot: true, visiblehandler: false});
       this.setState({plot_type: plot_type, var_x: var_x, var_y: var_y});
       break;
 
@@ -399,7 +399,7 @@ handleClick (buttonType, functionName, propertyName, plotType) {
     case "comatrix":
       constplot_type = arguments[1];
       const comatrix = arguments[2];
-      this.setState({multi: false, plot: true});
+      this.setState({multi: false, plot: true, visiblehandler: false});
       this.setState({plot_type: plot_type, comatrix: comatrix});
       break;
 
@@ -409,7 +409,7 @@ handleClick (buttonType, functionName, propertyName, plotType) {
       const group_bool = arguments[3];
       const stack_bool = arguments[4];
       var_x = arguments[5];
-      this.setState({multi: false, plot: true});
+      this.setState({multi: false, plot: true, visiblehandler: false});
       this.setState({plot_type: plot_type, simple_bool: simple_bool, group_bool: group_bool, stack_bool: stack_bool, var_x: var_x});
       break;
 
@@ -421,7 +421,7 @@ handleClick (buttonType, functionName, propertyName, plotType) {
       const exponential_bool = arguments[5];
       const polynomial_bool = arguments[6];
       const logarithmic_bool = arguments[7];
-      this.setState({multi: false, plot: true});
+      this.setState({multi: false, plot: true, visiblehandler: false});
       this.setState({plot_type: plot_type, var_x: var_x, var_y: var_y, straight_bool: straight_bool, exponential_bool: exponential_bool, polynomial_bool, polynomial_bool, logarithmic_bool: logarithmic_bool});
       break;
 
@@ -429,7 +429,7 @@ handleClick (buttonType, functionName, propertyName, plotType) {
       plot_type = arguments[1];
       var_x = arguments[3];
       const vars = arguments[4];
-      this.setState({multi: false, plot: true});
+      this.setState({multi: false, plot: true, visiblehandler: false});
       this.setState({plot_type: plot_type, var_x: var_x, vars: vars});
       break;
 

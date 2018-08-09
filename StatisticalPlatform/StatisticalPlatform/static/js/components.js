@@ -152,5 +152,3 @@ function MultiCol(firstCol, secondCol) {
 		return this[functionName]();
 	};
 }
-
-React.render(<WholeThing />, document.body);
