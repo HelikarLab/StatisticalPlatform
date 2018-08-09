@@ -1,17 +1,34 @@
-1) Create a new python 3 environment
-2) Activate the environment
-3) git clone https://github.com/tejasavkhattar/StatisticalPlatform.git
-4) cd StatisticalPlatform
-5) git checkout develop
-6) pip install -r requirements.txt 
-7) cd StatisticalPlatform
-8) python manage.py makemigrations
-9) python manage.py migrate
-10) python manage.py runserver
-11) In anaother terminal navigate to root directory 
-12) npm install
-13) node server
-14) In browser open link : 127.0.0.1:8000
-15) Make account and then signin and upload csv toget the results. 
+You need to download all the dependencies first before following these instructions. You can find step by step installation instructions for Ubuntu 16.04 [here](https://github.com/tejasavkhattar/StatisticalPlatform/wiki/Installation)
+* Clone git repository on desktop
+```
+$ cd Desktop
+$ git clone https://github.com/tejasavkhattar/StatisticalPlatform.git
+$ cd StatisticalPlatform
+$ git checkout develop
 
+```
+* Open other Terminal and start R server
+```
+$ sudo -i R
+> library(opencpu)
+> ocpu_start_server()
+```
+* Open other Terminal and start node server
+```
+$ cd StatisticalPlatform
+$ node server
+```
 
+* Open other Terminal and start django development server
+(Note: Execute these steps only after you have created virtualenv(StatisticalEnv) as per the instructions given [here](https://github.com/tejasavkhattar/StatisticalPlatform/wiki/Installation))
+```
+$ cd Desktop
+$ source StatisticalEnv/bin/activate
+$ cd StatisticalPlatform
+$ cd StatisticalPlatform
+$ python manage.py makemigrations
+$ python manage.py migrate
+$ python manage.py runserver
+```
+
+* Open google chrome and navigate to 127.0.0.1:8000
