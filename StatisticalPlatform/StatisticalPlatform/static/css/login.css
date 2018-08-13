@@ -1,0 +1,78 @@
+.box-layout {
+  background: url('../image/backgroundstatisticalplatform.png');
+  height:100%;
+  width:100%;
+  background-size: cover;
+  display: flex;
+  position: absolute;
+  overflow: hidden;
+
+}
+.container {
+  position: relative;
+
+
+}
+
+.heading {
+  color: #7d7d7d;
+  font-size: 60px;
+  font-family: sans-serif;
+}
+.back{
+    background-color: #e3e3e3;
+    background-size: cover;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    overflow: hidden;
+}
+.show-grid{
+  /* text-align: center; */
+}
+.btn_main{
+  background: #d80e3a;
+  display: inline;
+
+}
+.particle{
+
+}
+.head{
+ margin-top: 23px;
+}
+.headbut {
+  margin-right: 13px;
+}
+.login{
+  background: #b9b9b9;
+  padding: 5px 10px;
+
+
+  flex: 1;
+  z-index: 1000;
+  border-radius: 10px;
+  position: absolute;
+  top: 30vh;
+  height: 28rem;
+  width: 30rem;
+}
+#adjust{
+  padding-left: 0px;
+}
+.signup{
+  background: #b9b9b9;
+
+
+  padding: 5px 10px;
+  flex: 1;
+  margin-left: 20px;
+  z-index: 1000;
+  border-radius: 10px;
+  position: absolute;
+  top: 25vh;
+  height: 43rem;
+  width: 30rem;
+}
+.MainPage{
+  color: #f40035;
+}
