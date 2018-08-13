@@ -21,9 +21,20 @@ class PCAModal extends Component {
     );
 	}
 
+  onClick = () => {
+       this.setState({ showResults: true });
+  }
   render(){
     const options_list = [];
+    let inst = null;
+    const bold_style = {'fontSize': '15', 'fontWeight': 'bold'};
 
+		if (!this.state.showResults) {
+			inst = <Button onClick={this.onClick}>i</Button>
+		}
+		else {
+			inst = <p style = {bold_style}>Description:</p>;
+		}
 		this.props.variables.map( (variable) => {
 			options_list.push(<option value={variable}>{variable}</option>);
 		});
@@ -44,11 +55,24 @@ class PCAModal extends Component {
               </FormControl>
             </FormGroup>
           </form>
+          {inst}
+          { this.state.showResults ? <PCAInstruction /> : null }
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={()=>{this.props.onClose({showPCAPlot: false})}}>Close</Button>
             <Button bsStyle= "success"  onClick={this.handleClick} type="submit">Submit</Button>
           </Modal.Footer>
+      </div>
+    );
+  }
+}
+
+class PCAInstruction extends Component {
+  render() {
+    const style = {'fontFamily': 'DROID SANS MONO'};
+    return(
+      <div id="results" className="search-results">
+      <p>{'Factor Variable should be a categorical variable and all other varibales should be Numeric type.'}</p>
       </div>
     );
   }

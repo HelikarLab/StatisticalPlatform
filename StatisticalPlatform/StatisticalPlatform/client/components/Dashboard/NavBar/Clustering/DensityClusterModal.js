@@ -70,6 +70,7 @@ class DensityClusterModal extends Component {
               <br/>
             <ControlLabel>Minimum Points</ControlLabel>
           <input type="number" min={ 0 } className="form-control" ref={ref => this.minpts = ref } />
+          <br/>
             <ControlLabel>Epsilon</ControlLabel>
           <input type="number" min={ 0 } className="form-control" ref={ref => this.eps = ref } />
             </FormGroup>
@@ -92,15 +93,9 @@ class DensityClusteringInstruction extends Component {
     const style = {'fontFamily': 'DROID SANS MONO'};
     return(
       <div id="results" className="search-results">
-      <p>{'Select two columns and  value i.e. number of clusters.'}</p>
-      <table style = {style}>
-        <tr>
-          <td>{'library(ggplot2)'}</td>
-        </tr>
-        <tr>
-          <td>{'ggplot(data, aes(var_x, var_y, color = Species)) + geom_point()'}</td>
-        </tr>
-      </table>
+      <p>{'Select data with 2 columns'}</p>
+    <p>{'Minimum Points: as minimum neighbors to consider a point as core point'}</p>
+  <p>{'Epsilon: as neighborhood radius '}</p>
       </div>
     );
   }

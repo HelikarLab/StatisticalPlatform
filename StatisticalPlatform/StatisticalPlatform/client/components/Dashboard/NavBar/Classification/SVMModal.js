@@ -38,12 +38,25 @@ class SVMModal extends Component {
     );
 	}
 
+  onClick = () => {
+       this.setState({ showResults: true });
+  }
+
   render() {
     const options_list = [];
 		this.props.variables.forEach( (variable) => {
 			options_list.push(<option value={variable}>{variable}</option>);
 		});
 
+    let inst = null;
+    const bold_style = {'fontSize': '15', 'fontWeight': 'bold'};
+
+		if (!this.state.showResults) {
+			inst = <Button onClick={this.onClick}>i</Button>
+		}
+		else {
+			inst = <p style = {bold_style}>Description:</p>;
+		}
 
     return(
       <div className="modal-container">
@@ -67,6 +80,8 @@ class SVMModal extends Component {
         </FormControl>
             </FormGroup>
           </form>
+          {inst}
+          { this.state.showResults ? <SVMInstruction /> : null }
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={()=>{this.props.onClose({showSVM: false})}}>Close</Button>
@@ -76,5 +91,17 @@ class SVMModal extends Component {
     );
   }
 }
+
+class SVMInstruction extends Component {
+  render() {
+    const style = {'fontFamily': 'DROID SANS MONO'};
+    return(
+      <div id="results" className="search-results">
+      <p>{'Data Set should have 3 columns out of which one should be a Factor Variable i.e. it should have different categories on the basis of which classification will be done.'}</p>
+      </div>
+    );
+  }
+}
+
 
 export default SVMModal;
